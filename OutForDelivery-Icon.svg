@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Out for Delivery — app icon master art
+  1024x1024, full-bleed, NO baked-in rounded-corner mask (Icon Composer / iOS apply the shape).
+  Two named groups below map to two Icon Composer layers:
+    #parcel      - the kraft delivery box (the recognizable "package" read)
+    #contraction - the toco/contraction curve + live marker (the one bold signature element)
+  Background is transparent — set the field/background in Icon Composer.
+  Art is kept intentionally flat: no heavy drop shadows or gloss, since Icon Composer adds
+  depth, specular highlight, shadow, and the Liquid Glass material itself.
+-->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="frontGrad" x1="0" y1="380" x2="0" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F0CD93"/>
+      <stop offset="1" stop-color="#E2B679"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Transparent background: no field baked in. Set the background in Icon Composer
+       (or composite the parcel/contraction layers over your own). -->
+
+  <!-- ============ LAYER: parcel ============ -->
+  <!-- translate centers the 3D box optically on the 1024 canvas -->
+  <g id="parcel" transform="translate(-18,-25)">
+    <!-- top face (lit) -->
+    <polygon points="297,380 697,380 763,314 363,314" fill="#F8DEB0"/>
+    <!-- right face (shadow side) -->
+    <polygon points="697,380 763,314 763,694 697,760" fill="#D2A063"/>
+    <!-- front face -->
+    <polygon points="297,380 697,380 697,760 297,760" fill="url(#frontGrad)"/>
+    <!-- top flap seam (reads as a closed cardboard box) -->
+    <line x1="497" y1="380" x2="563" y2="314" stroke="#C99A5E" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ============ LAYER: contraction ============ -->
+  <g id="contraction" transform="translate(-18,-25)">
+    <!-- toco-style contraction curve: flat baseline rising to one rounded peak -->
+    <path d="M 322 648 L 408 648 C 452 648 470 472 512 472 C 554 472 572 648 616 648 L 672 648"
+          fill="none" stroke="#FF6B4A" stroke-width="18"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- live tracking marker at the leading edge -->
+    <circle cx="672" cy="648" r="17" fill="#FFFFFF"/>
+    <circle cx="672" cy="648" r="10" fill="#FF6B4A"/>
+  </g>
+</svg>

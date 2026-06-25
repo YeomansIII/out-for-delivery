@@ -44,7 +44,17 @@ Built for one job, done well: open the app, hit a big **Start** / **Stop** butto
 | `Out for Delivery/ContractionActivityAttributes.swift` | Live Activity data contract (shared with the extension) |
 | `Out for Delivery/PatternAnalyzer.swift` · `SessionGrouper.swift` | 5-1-1 readout and session grouping |
 | `LiveActivity/` · `Widgets/` | Widget extension hosting the Live Activity UI |
-| `ContractionTracker-Spec.md` | Full implementation spec |
+| `docs/` | Design specs and feature plans (see [Documentation](#documentation)) |
+
+## Documentation
+
+Design and planning docs live in [`docs/`](docs/):
+
+| Document | Purpose |
+|---|---|
+| [`docs/ContractionTracker-Spec.md`](docs/ContractionTracker-Spec.md) | Full implementation spec for the contraction-timer MVP |
+| [`docs/Feature-Plan.md`](docs/Feature-Plan.md) | Numbered user stories for the labor / contraction-timing app (Epics 1–6) |
+| [`docs/Newborn-Care-Features.md`](docs/Newborn-Care-Features.md) | Numbered user stories for post-birth newborn tracking (Epics 7+) |
 
 ## Building
 

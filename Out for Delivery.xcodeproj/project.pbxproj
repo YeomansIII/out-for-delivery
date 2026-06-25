@@ -112,6 +112,11 @@
 			path = LiveActivity;
 			sourceTree = "<group>";
 		};
+		96C38B472FEDB2BF00AF50FD /* docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = docs;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +156,7 @@
 		9619DF7E2FE47A1F00506BB5 = {
 			isa = PBXGroup;
 			children = (
+				96C38B472FEDB2BF00AF50FD /* docs */,
 				9619DF892FE47A1F00506BB5 /* Out for Delivery */,
 				9619DF9B2FE47A2000506BB5 /* Out for DeliveryTests */,
 				9619DFA52FE47A2000506BB5 /* Out for DeliveryUITests */,

@@ -10,5 +10,6 @@ import SwiftUI
 struct LiveActivityBundle: WidgetBundle {
     var body: some Widget {
         ContractionLiveActivity()
+        FeedReminderAlarmWidget()
     }
 }

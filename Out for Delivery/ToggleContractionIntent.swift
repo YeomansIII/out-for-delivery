@@ -2,19 +2,20 @@
 //  ToggleContractionIntent.swift
 //  Out for Delivery
 //
-//  Shared between the app target and the widget extension target.
+//  Cross-target shared types: this file is a member of BOTH the app target and
+//  the LiveActivity widget extension target (File Inspector → Target Membership).
+//  It holds the intents/metadata both targets need so the widget can render app
+//  controls and AlarmKit presentations without pulling in the app's services.
 //
-//  TARGET MEMBERSHIP: must be checked for BOTH the app target and the
-//  LiveActivity widget target (File Inspector → Target Membership).
-//
-//  `LiveActivityIntent.perform()` runs in the app's process, so the actual
-//  toggle is invoked through `IntentDispatcher.toggle`, which the app
-//  registers at launch. This keeps `ContractionService` and its
-//  dependencies out of the widget target.
+//  `LiveActivityIntent.perform()` runs in the app's process, so the actual work
+//  is invoked through a dispatcher closure the app registers at launch. This keeps
+//  `ContractionService` / `FeedService` and their dependencies out of the widget
+//  target.
 //
 
 import Foundation
 import AppIntents
+import AlarmKit
 
 public enum IntentDispatcher {
     /// Registered by the app at launch. The widget extension also links this
@@ -43,6 +44,42 @@ public struct ToggleContractionIntent: LiveActivityIntent {
     @MainActor
     public func perform() async throws -> some IntentResult {
         IntentDispatcher.toggle()
+        return .result()
+    }
+}
+
+// MARK: - Feed-on-demand reminder (newborn mode)
+
+/// Metadata attached to a feed-reminder alarm. The visible content comes from the
+/// alarm's `AlarmPresentation`, so this stays empty — but AlarmKit requires a
+/// concrete `AlarmMetadata` type, and sharing it lets the widget specialize
+/// `AlarmAttributes<FeedReminderMetadata>`.
+public struct FeedReminderMetadata: AlarmMetadata {
+    public init() {}
+}
+
+public enum FeedReminderDispatcher {
+    /// Registered by the app at launch. Invoked (in the app's process) when a feed
+    /// reminder is stopped from its alert, with the Baby's id string, so the app can
+    /// clear the stored alarm id. The widget links this file but never invokes the
+    /// closure — the system routes the intent to the app process for execution.
+    @MainActor public static var stop: @MainActor (String) -> Void = { _ in }
+}
+
+/// Runs when a person taps Stop on a firing feed reminder. AlarmKit stops the alarm
+/// itself; this intent additionally clears the app's per-baby alarm bookkeeping.
+public struct StopFeedReminderIntent: LiveActivityIntent {
+    public static var title: LocalizedStringResource = "Stop Feed Reminder"
+
+    @Parameter(title: "Baby ID")
+    public var babyID: String
+
+    public init() {}
+    public init(babyID: String) { self.babyID = babyID }
+
+    @MainActor
+    public func perform() async throws -> some IntentResult {
+        FeedReminderDispatcher.stop(babyID)
         return .result()
     }
 }

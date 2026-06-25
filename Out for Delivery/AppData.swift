@@ -17,7 +17,7 @@ final class AppData {
     let container: ModelContainer
 
     private init() {
-        let schema = Schema([Contraction.self])
+        let schema = Schema([Contraction.self, Baby.self, Feed.self])
         let configuration = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false,

@@ -162,6 +162,8 @@ struct ContentView: View {
         }
         ToolbarItem(placement: .topBarTrailing) {
             Menu {
+                ModeMenuButtons()
+                Divider()
                 Button {
                     Task {
                         liveActivityHidden.toggle()

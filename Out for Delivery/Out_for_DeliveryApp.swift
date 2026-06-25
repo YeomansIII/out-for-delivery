@@ -15,11 +15,17 @@ struct Out_for_DeliveryApp: App {
         IntentDispatcher.toggle = {
             ContractionService.shared.toggle()
         }
+
+        // Register the in-process handler for the feed reminder's Stop intent so
+        // the per-baby alarm bookkeeping stays in sync when a reminder is dismissed.
+        // Alarm authorization is requested lazily, the first time a caregiver
+        // enables a reminder (see FeedReminderManager.reschedule).
+        FeedReminderManager.shared.registerIntentHandlers()
     }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
         .modelContainer(AppData.shared.container)
     }

@@ -28,4 +28,17 @@ enum TimeFormatting {
     static func clock(_ date: Date) -> String {
         date.formatted(date: .omitted, time: .shortened)
     }
+
+    /// Human elapsed gap like `45m`, `1h 23m`, `2d 3h` — for "time since last feed".
+    static func elapsedShort(_ interval: TimeInterval) -> String {
+        let total = Int(max(0, interval).rounded())
+        let minutes = total / 60
+        if minutes < 60 { return "\(minutes)m" }
+        let hours = minutes / 60
+        let mins = minutes % 60
+        if hours < 24 { return mins == 0 ? "\(hours)h" : "\(hours)h \(mins)m" }
+        let days = hours / 24
+        let hrs = hours % 24
+        return hrs == 0 ? "\(days)d" : "\(days)d \(hrs)h"
+    }
 }

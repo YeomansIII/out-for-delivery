@@ -60,7 +60,7 @@ Covers timed nursing and bottle feeds, with "time since last feed" as the headli
 
 8.6. 🚧 *(Phase 1, in progress)* As a caregiver, I want to log a bottle feed by volume (in my preferred unit, ml or oz), so that I have an accurate record of how much the baby consumed. *(Volume is an optional amount on a bottle-kind feed; unit is an app-wide preference, stored canonically as ml.)*
 
-8.7. As a caregiver, I want to mark a bottle feed as formula or expressed breast milk, so that I can distinguish the two in my records.
+8.7. ✅ As a caregiver, I want to mark a bottle feed as formula or expressed breast milk, so that I can distinguish the two in my records. *(Built in the improved feed sheet: `BottleContent` on `Feed`, Formula / Breast milk selector in `EditFeedView`.)*
 
 ### Shared feed behavior
 
@@ -70,7 +70,7 @@ Covers timed nursing and bottle feeds, with "time since last feed" as the headli
 
 8.10. As a caregiver, I want each feed to record which caregiver logged it, so that a hand-off partner can see who fed the baby last.
 
-8.11. As a caregiver, I want to add an optional note to a feed, so that I can capture details like fussiness, spit-up, or latch quality.
+8.11. ✅ As a caregiver, I want to add an optional note to a feed, so that I can capture details like fussiness, spit-up, or latch quality. *(Note field in `EditFeedView`, stored on `Feed.note`.)*
 
 ### Feed-on-demand reminder — *Phase 1, in progress* 🚧
 
@@ -114,7 +114,13 @@ These let a caregiver record what a lactation consultant or pediatrician recomme
 
 8.26. As a caregiver, I want to edit the feeding plan and volume targets whenever my provider revises them, so that the plan stays current as recommendations change.
 
-## Epic 9 — Pump Tracking — *Planned*
+## Epic 9 — Pump Tracking — *Implemented (live timer deferred)*
+
+> **Implementation note (2026-06-27):** Built. `Pump` model (left/right/combined ml +
+> duration + note), `PumpService`, `EditPumpView` (per-side or combined entry, manual
+> duration), and `PumpListView` (recent / add-past / edit / delete). Surfaced on the
+> dashboard (last pump + today's expressed total). **Deferred:** the live "Time it"
+> session timer (9.2 still satisfied via manual minutes).
 
 Pump sessions only — no milk-inventory/storage tracking in this scope.
 
@@ -130,7 +136,13 @@ Pump sessions only — no milk-inventory/storage tracking in this scope.
 
 > **Out of scope (proposed, not planned):** milk inventory / storage tracking (fridge & freezer stash, oldest-first usage, bottles drawing down stored milk). Revisit as a future epic if needed.
 
-## Epic 10 — Diaper Tracking — *Planned*
+## Epic 10 — Diaper Tracking — *Implemented*
+
+> **Implementation note (2026-06-27):** Built. `Diaper` model (`DiaperKind` wet/dirty/both,
+> `DiaperColor`, `DiaperConsistency`, note), `DiaperService` (today's wet/dirty counts,
+> time-since-last), `EditDiaperView` (color swatches + consistency for dirty), and
+> `DiaperListView` (recent / add-past / edit / delete). Surfaced on the dashboard
+> (last change + today's wet/dirty totals).
 
 The lowest-friction feature; matters clinically in the newborn weeks for confirming adequate intake.
 
@@ -146,7 +158,14 @@ The lowest-friction feature; matters clinically in the newborn weeks for confirm
 
 10.6. As a caregiver, I want to add an optional note to a diaper change, so that I can flag something unusual (e.g. blood, rash).
 
-## Epic 11 — Newborn Dashboard & Timeline — *Planned*
+## Epic 11 — Newborn Dashboard & Timeline — *Dashboard built; timeline planned*
+
+> **Implementation note (2026-06-27):** The dashboard (`NewbornModeView` /
+> `BabyDashboardView`) is built per design frame 01 — recent feed/diaper/pump tiles
+> with time-since (11.1), quick-log buttons (11.2), daily totals (11.6), per-event
+> attribution in the logs (11.7), and tap-through to each per-type log for view/edit/
+> delete (11.5, per type). **Not yet built:** the *unified* cross-type timeline and
+> its type filters (11.3, 11.4) — see design frame 07 and `docs/Design-Map.md`.
 
 The home screen of newborn mode, tying every feature together.
 

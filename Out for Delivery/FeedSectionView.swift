@@ -9,19 +9,25 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
+import UniformTypeIdentifiers
 
 struct FeedSectionView: View {
-    @Bindable var baby: Baby
-    @Query private var feeds: [Feed]
+    @ObservedObject var baby: Baby
+    @FetchRequest private var feeds: FetchedResults<Feed>
 
     @State private var appState = AppState.shared
     @State private var sheet: FeedSheet?
 
+    @State private var showCSVImporter = false
+    @State private var importResultMessage = ""
+    @State private var showImportResult = false
+
     /// Which editor sheet is shown. Create mode carries no model (the feed is
     /// inserted only on Save), so presenting it never races an insert-driven
-    /// re-render. Edit mode keys on `Feed.id` (our stable UUID), not the model's
-    /// `persistentModelID`, which would otherwise change on save and dismiss the sheet.
+    /// re-render. Edit mode keys on `Feed.id` (our stable UUID), not the managed
+    /// object's `objectID`, which can change from temporary to permanent on save
+    /// and would otherwise dismiss the sheet.
     private enum FeedSheet: Identifiable {
         case create(FeedKind)
         case edit(Feed)
@@ -38,12 +44,11 @@ struct FeedSectionView: View {
     private let intervalOptions: [TimeInterval] = [2, 2.5, 3, 3.5, 4].map { $0 * 3600 }
 
     init(baby: Baby) {
-        _baby = Bindable(wrappedValue: baby)
+        _baby = ObservedObject(wrappedValue: baby)
         let id = baby.id
-        _feeds = Query(
-            filter: #Predicate<Feed> { $0.babyID == id },
-            sort: \Feed.timestamp,
-            order: .reverse
+        _feeds = FetchRequest(
+            sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)],
+            predicate: NSPredicate(format: "babyID == %@", id as CVarArg)
         )
     }
 
@@ -56,6 +61,18 @@ struct FeedSectionView: View {
             unitsSection
             reminderSection
             if !feeds.isEmpty { recentSection }
+            dataSection
+        }
+        .fileImporter(
+            isPresented: $showCSVImporter,
+            allowedContentTypes: [.commaSeparatedText]
+        ) { result in
+            handleImport(result)
+        }
+        .alert("Import", isPresented: $showImportResult) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(importResultMessage)
         }
         .sheet(item: $sheet) { which in
             switch which {
@@ -66,8 +83,10 @@ struct FeedSectionView: View {
                         timestamp: draft.timestamp,
                         kind: draft.kind,
                         volume: draft.volume,
+                        bottle: draft.bottle,
                         leftMinutes: draft.leftMinutes,
-                        rightMinutes: draft.rightMinutes
+                        rightMinutes: draft.rightMinutes,
+                        note: draft.note
                     )
                 }
             case .edit(let feed):
@@ -77,12 +96,58 @@ struct FeedSectionView: View {
                         timestamp: draft.timestamp,
                         kind: draft.kind,
                         volume: draft.volume,
+                        bottle: draft.bottle,
                         leftMinutes: draft.leftMinutes,
-                        rightMinutes: draft.rightMinutes
+                        rightMinutes: draft.rightMinutes,
+                        note: draft.note
                     )
                 }
             }
         }
+    }
+
+    // MARK: - Export / Import
+
+    private var dataSection: some View {
+        Section {
+            if let url = feedCSVURL {
+                ShareLink(item: url) {
+                    Label("Export feeds", systemImage: "square.and.arrow.up")
+                }
+            }
+            Button {
+                showCSVImporter = true
+            } label: {
+                Label("Import feeds", systemImage: "square.and.arrow.down")
+            }
+        } header: {
+            Text("Feed data")
+        } footer: {
+            Text("Export this baby's feeds, or import a feeds CSV into this baby. Duplicate entries are skipped.")
+        }
+    }
+
+    private var feedCSVURL: URL? {
+        feeds.isEmpty ? nil : CSVExporter.makeFeedCSV(feeds: Array(feeds))
+    }
+
+    /// Imports a picked CSV into this baby and shows the result.
+    private func handleImport(_ result: Result<URL, Error>) {
+        switch result {
+        case .success(let url):
+            do {
+                let summary = try CSVImport.importFile(
+                    at: url,
+                    context: CSVImportContext(activeBabyID: baby.id)
+                )
+                importResultMessage = summary.message
+            } catch {
+                importResultMessage = error.localizedDescription
+            }
+        case .failure(let error):
+            importResultMessage = error.localizedDescription
+        }
+        showImportResult = true
     }
 
     // MARK: - Status

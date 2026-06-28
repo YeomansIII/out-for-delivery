@@ -26,7 +26,9 @@ struct StatusHeaderView: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassEffect(.regular, in: .rect(cornerRadius: 14))
+        // Content-layer card: standard material per HIG, which reserves Liquid Glass
+        // for the floating control / navigation layer (the Start/Stop controls).
+        .background(.regularMaterial, in: .rect(cornerRadius: 14))
     }
 
     private var phaseIcon: String {

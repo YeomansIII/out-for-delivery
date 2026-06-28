@@ -4,12 +4,12 @@
 //
 //  Single source of truth for feed mutations (log / edit / delete), scoped to a
 //  baby. Mirrors ContractionService: it routes every mutation through the one
-//  shared `mainContext` (the same context SwiftUI injects for `@Query`) and, after
-//  each change, re-arms the feed-on-demand reminder via FeedReminderManager.
+//  shared `viewContext` (the same context SwiftUI injects for `@FetchRequest`) and,
+//  after each change, re-arms the feed-on-demand reminder via FeedReminderManager.
 //
 
 import Foundation
-import SwiftData
+import CoreData
 import Observation
 
 @MainActor
@@ -17,24 +17,23 @@ import Observation
 final class FeedService {
     static let shared = FeedService()
 
-    private let context: ModelContext
+    private let context: NSManagedObjectContext
 
     private init() {
-        // Share the container's main context — the same one SwiftUI injects for
-        // `@Query`. A separate context would split the object graph and let
+        // Share the container's view context — the same one SwiftUI injects for
+        // `@FetchRequest`. A separate context would split the object graph and let
         // deleted rows reappear on save (see ContractionService for the rationale).
-        self.context = AppData.shared.container.mainContext
+        self.context = PersistenceController.shared.viewContext
     }
 
     // MARK: - Fetch helpers
 
     /// All feeds for a baby, oldest first.
     func feeds(for babyID: UUID) -> [Feed] {
-        let descriptor = FetchDescriptor<Feed>(
-            predicate: #Predicate { $0.babyID == babyID },
-            sortBy: [SortDescriptor(\.timestamp, order: .forward)]
-        )
-        return (try? context.fetch(descriptor)) ?? []
+        let request = Feed.fetchRequest()
+        request.predicate = NSPredicate(format: "babyID == %@", babyID as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
+        return (try? context.fetch(request)) ?? []
     }
 
     /// The most recent feed for a baby, if any.
@@ -59,18 +58,25 @@ final class FeedService {
         timestamp: Date = Date(),
         kind: FeedKind = .unspecified,
         volume: Double? = nil,
+        bottle: BottleContent? = nil,
         leftMinutes: Int? = nil,
-        rightMinutes: Int? = nil
+        rightMinutes: Int? = nil,
+        note: String? = nil
     ) -> Feed {
-        let feed = Feed(
-            babyID: babyID,
-            timestamp: timestamp,
-            kind: kind.rawValue,
-            volume: volume,
-            leftMinutes: leftMinutes,
-            rightMinutes: rightMinutes
-        )
-        context.insert(feed)
+        let feed = Feed(context: context)
+        feed.id = UUID()
+        feed.babyID = babyID
+        feed.timestamp = timestamp
+        feed.feedKind = kind
+        feed.volume = volume
+        feed.bottle = bottle
+        feed.leftMinutes = leftMinutes
+        feed.rightMinutes = rightMinutes
+        feed.note = note?.nonEmpty
+        // The Baby is this feed's share root; relate them so the feed travels with
+        // the baby when shared. babyID stays set for the per-baby fetch predicate.
+        feed.baby = baby(with: babyID)
+        CurrentUserIdentity.shared.stamp(feed)
         try? context.save()
         rescheduleReminder(for: babyID)
         return feed
@@ -84,14 +90,18 @@ final class FeedService {
         timestamp: Date,
         kind: FeedKind,
         volume: Double?,
+        bottle: BottleContent?,
         leftMinutes: Int?,
-        rightMinutes: Int?
+        rightMinutes: Int?,
+        note: String?
     ) {
         feed.timestamp = timestamp
         feed.feedKind = kind
         feed.volume = volume
+        feed.bottle = bottle
         feed.leftMinutes = leftMinutes
         feed.rightMinutes = rightMinutes
+        feed.note = note?.nonEmpty
         try? context.save()
         rescheduleReminder(for: feed.babyID)
     }
@@ -109,6 +119,50 @@ final class FeedService {
         try? context.save()
     }
 
+    // MARK: - Import
+
+    /// Bulk-imports feeds for one baby (CSV import). Records whose (timestamp, kind)
+    /// already exists are skipped, so re-importing the same file is idempotent.
+    /// Saves once and re-arms the reminder a single time afterwards.
+    @discardableResult
+    func importFeeds(for babyID: UUID, records: [FeedImport]) -> (imported: Int, duplicates: Int) {
+        var existing = Set(feeds(for: babyID).map { Self.feedKey(timestamp: $0.timestamp, kind: $0.kind) })
+        let baby = baby(with: babyID)
+        var imported = 0
+        var duplicates = 0
+        for record in records {
+            let key = Self.feedKey(timestamp: record.timestamp, kind: record.kind.rawValue)
+            if existing.contains(key) {
+                duplicates += 1
+                continue
+            }
+            existing.insert(key)
+            let feed = Feed(context: context)
+            feed.id = UUID()
+            feed.babyID = babyID
+            feed.timestamp = record.timestamp
+            feed.feedKind = record.kind
+            feed.volume = record.volume
+            feed.leftMinutes = record.leftMinutes
+            feed.rightMinutes = record.rightMinutes
+            feed.note = record.note
+            feed.baby = baby
+            CurrentUserIdentity.shared.stamp(feed)
+            imported += 1
+        }
+        if imported > 0 {
+            try? context.save()
+            rescheduleReminder(for: babyID)
+        }
+        return (imported, duplicates)
+    }
+
+    /// De-dup key for a feed, rounding the timestamp to the whole second to absorb
+    /// any sub-second float drift across an export/import round trip.
+    private static func feedKey(timestamp: Date, kind: String) -> String {
+        "\(Int(timestamp.timeIntervalSinceReferenceDate.rounded()))-\(kind)"
+    }
+
     // MARK: - Reminder coordination
 
     /// Re-arms (or clears) the baby's feed-on-demand reminder after a feed change.
@@ -118,14 +172,16 @@ final class FeedService {
     }
 
     func baby(with id: UUID) -> Baby? {
-        let descriptor = FetchDescriptor<Baby>(predicate: #Predicate { $0.id == id })
-        return (try? context.fetch(descriptor))?.first
+        let request = Baby.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.fetchLimit = 1
+        return (try? context.fetch(request))?.first
     }
 }
 
 /// Pure feed-on-demand reminder timing, shared by FeedReminderManager (to schedule
 /// the AlarmKit countdown) and the UI (to show "next reminder"). Kept free of
-/// SwiftData / AlarmKit so it is unit-testable in isolation.
+/// Core Data / AlarmKit so it is unit-testable in isolation.
 enum FeedMath {
     /// When the reminder should fire: (last feed, or now if none) + interval.
     static func reminderFireDate(lastFeed: Date?, interval: TimeInterval, now: Date = Date()) -> Date {

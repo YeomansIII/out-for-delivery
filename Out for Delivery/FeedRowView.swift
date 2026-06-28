@@ -34,6 +34,7 @@ struct FeedRowView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                LoggedByLabel(name: feed.loggedByName)
             }
 
             Spacer(minLength: 0)
@@ -69,8 +70,14 @@ struct FeedRowView: View {
     private var detailText: String? {
         switch feed.feedKind {
         case .bottle:
-            guard let ml = feed.volume else { return "Bottle" }
-            return "Bottle · \(AppState.shared.volumeUnit.formatted(fromMilliliters: ml))"
+            var parts = ["Bottle"]
+            if let ml = feed.volume {
+                parts.append(AppState.shared.volumeUnit.formatted(fromMilliliters: ml))
+            }
+            if let content = feed.bottle {
+                parts.append(content.label.lowercased())
+            }
+            return parts.count == 1 ? "Bottle" : parts.joined(separator: " · ")
         case .breast:
             var sides: [String] = []
             if let left = feed.leftMinutes, left > 0 { sides.append("L \(left)m") }
@@ -88,6 +95,9 @@ struct FeedRowView: View {
         }
         if let interval {
             parts.append("\(TimeFormatting.compact(interval)) since the previous one")
+        }
+        if let loggedBy = feed.loggedByName, !loggedBy.isEmpty {
+            parts.append("logged by \(loggedBy)")
         }
         return parts.joined(separator: ", ")
     }

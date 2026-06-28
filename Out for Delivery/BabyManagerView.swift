@@ -7,15 +7,20 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct BabyManagerView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var moc
     @State private var appState = AppState.shared
 
-    @Query(sort: \Baby.createdAt, order: .forward) private var allBabies: [Baby]
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: true)]
+    ) private var allBabies: FetchedResults<Baby>
 
     @State private var sheet: BabySheet?
+    /// The baby whose share controls are presented, if any.
+    @State private var shareTarget: ShareTarget?
 
     private var activeBabies: [Baby] { allBabies.filter { !$0.isArchived } }
     private var archivedBabies: [Baby] { allBabies.filter { $0.isArchived } }
@@ -40,7 +45,10 @@ struct BabyManagerView: View {
                             HStack {
                                 Text(baby.name)
                                 Spacer()
-                                Button("Restore") { baby.isArchived = false }
+                                Button("Restore") {
+                                    baby.isArchived = false
+                                    try? moc.save()
+                                }
                             }
                         }
                     }
@@ -59,10 +67,16 @@ struct BabyManagerView: View {
                 }
             }
             .sheet(item: $sheet) { which in
-                switch which {
-                case .add: BabyFormView(baby: nil)
-                case .edit(let baby): BabyFormView(baby: baby)
+                Group {
+                    switch which {
+                    case .add: BabyFormView(baby: nil)
+                    case .edit(let baby): BabyFormView(baby: baby)
+                    }
                 }
+                .environment(\.managedObjectContext, PersistenceController.shared.viewContext)
+            }
+            .sheet(item: $shareTarget) { target in
+                RecordShareView(target: target)
             }
         }
     }
@@ -92,10 +106,19 @@ struct BabyManagerView: View {
             Button("Edit") { sheet = .edit(baby) }
                 .tint(.blue)
         }
+        .swipeActions(edge: .leading) {
+            Button {
+                shareTarget = ShareTarget(objectID: baby.objectID, title: baby.name)
+            } label: {
+                Label("Share", systemImage: "person.crop.circle.badge.plus")
+            }
+            .tint(.green)
+        }
     }
 
     private func archive(_ baby: Baby) {
         baby.isArchived = true
+        try? moc.save()
         if appState.activeBabyID == baby.id {
             appState.activeBabyID = activeBabies.first(where: { $0.id != baby.id })?.id
         }

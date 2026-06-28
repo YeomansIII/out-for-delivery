@@ -7,50 +7,44 @@
 //
 
 import Foundation
-import SwiftData
+import CoreData
 
-@Model
-final class Baby {
-    // CloudKit-backed SwiftData forbids @Attribute(.unique) and requires every
-    // stored property to be optional OR have a default. Uniqueness of `id` is
-    // enforced by app logic.
-    var id: UUID = UUID()
-    var name: String = ""
-    var birthDate: Date = Date.distantPast
-    var isArchived: Bool = false
+@objc(Baby)
+final class Baby: NSManagedObject, Identifiable {
+    // CloudKit-backed Core Data forbids unique constraints; uniqueness of `id` is
+    // enforced by app logic. Non-optional properties carry model defaults so they
+    // are never nil at read time.
+    @NSManaged var id: UUID
+    @NSManaged var name: String
+    @NSManaged var birthDate: Date
+    @NSManaged var isArchived: Bool
     /// When the profile was created — a stable sort key independent of birthDate.
-    var createdAt: Date = Date.distantPast
+    @NSManaged var createdAt: Date
 
     // MARK: Feed-on-demand reminder (per-baby)
 
     /// When true, logging a feed arms an AlarmKit countdown; if it lapses with no
     /// new feed, an alarm-style alert fires (overrides silent mode / Focus).
-    var feedReminderEnabled: Bool = false
+    @NSManaged var feedReminderEnabled: Bool
     /// Interval from the latest feed to the reminder. Defaults to 3 hours.
-    var feedReminderInterval: TimeInterval = 3 * 60 * 60
+    @NSManaged var feedReminderInterval: TimeInterval
     /// The currently-scheduled AlarmKit alarm id, so it can be cancelled and
     /// rescheduled when a new feed is logged or settings change. `nil` when no
     /// reminder is armed.
-    var feedAlarmID: UUID?
+    @NSManaged var feedAlarmID: UUID?
 
-    init(
-        id: UUID = UUID(),
-        name: String,
-        birthDate: Date,
-        isArchived: Bool = false,
-        createdAt: Date = Date(),
-        feedReminderEnabled: Bool = false,
-        feedReminderInterval: TimeInterval = 3 * 60 * 60,
-        feedAlarmID: UUID? = nil
-    ) {
-        self.id = id
-        self.name = name
-        self.birthDate = birthDate
-        self.isArchived = isArchived
-        self.createdAt = createdAt
-        self.feedReminderEnabled = feedReminderEnabled
-        self.feedReminderInterval = feedReminderInterval
-        self.feedAlarmID = feedAlarmID
+    /// This baby's feeds. The Baby is its own CKShare root, so its feeds travel
+    /// with it as children (cascade delete) when the baby is shared.
+    @NSManaged var feeds: NSSet?
+
+    /// This baby's diaper changes. Children of the baby's share root (cascade delete).
+    @NSManaged var diapers: NSSet?
+
+    /// This baby's pump sessions. Children of the baby's share root (cascade delete).
+    @NSManaged var pumps: NSSet?
+
+    static func fetchRequest() -> NSFetchRequest<Baby> {
+        NSFetchRequest<Baby>(entityName: "Baby")
     }
 
     /// A short, human description of the baby's age, e.g. "Born today", "3 days old", "2 weeks old".

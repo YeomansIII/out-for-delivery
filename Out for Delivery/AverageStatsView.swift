@@ -40,6 +40,8 @@ struct AverageStatsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
-        .glassEffect(.regular, in: .rect(cornerRadius: 14))
+        // Content-layer card: standard material per HIG, which reserves Liquid Glass
+        // for the floating control / navigation layer.
+        .background(.regularMaterial, in: .rect(cornerRadius: 14))
     }
 }

@@ -6,57 +6,77 @@
 //  headline newborn metric, and each logged feed (re)arms the feed-on-demand
 //  reminder (see FeedReminderManager).
 //
-//  Phase 1 logs only a timestamp. The `kind`, `volume`, and `note` fields are
-//  reserved now (all optional / defaulted) so adding nursing-vs-bottle richness
-//  in a later phase needs no CloudKit schema migration.
+//  Each feed is a child of its Baby (the `baby` relationship), so it travels with
+//  the baby when the baby is shared as a CKShare root. `babyID` is also kept as a
+//  loose foreign key so the per-baby fetch predicate stays simple; both are set on
+//  create. Optional numeric details (bottle volume, nursing minutes) are backed by
+//  NSNumber attributes to preserve the nil/zero distinction.
 //
 
 import Foundation
-import SwiftData
+import CoreData
 
-@Model
-final class Feed {
-    // CloudKit-backed SwiftData forbids @Attribute(.unique) and requires every
-    // stored property to be optional OR have a default. Uniqueness of `id` is
-    // enforced by app logic; `babyID` scopes the feed to its Baby.
-    var id: UUID = UUID()
-    var babyID: UUID = UUID()
-    var timestamp: Date = Date.distantPast
-    /// Reserved for a later phase (nursing / bottle). Raw string for CloudKit safety.
-    var kind: String = "unspecified"
+@objc(Feed)
+final class Feed: NSManagedObject, Identifiable {
+    @NSManaged var id: UUID
+    @NSManaged var babyID: UUID
+    @NSManaged var timestamp: Date
+    /// Raw `FeedKind` string for CloudKit safety. Use `feedKind` for typed access.
+    @NSManaged var kind: String
+    /// Optional free-text note for a feed (latch, spit-up, fussiness — story 8.11).
+    @NSManaged var note: String?
+    /// Raw `BottleContent` string for a bottle feed (formula vs expressed breast
+    /// milk — story 8.7). nil when not recorded or not a bottle. Typed via `bottle`.
+    @NSManaged var bottleContentRaw: String?
+
+    // MARK: Caregiver attribution (who logged this feed; nil for solo users).
+    @NSManaged var loggedByID: String?
+    @NSManaged var loggedByName: String?
+
+    /// The baby this feed belongs to. The Baby is the CKShare root; feeds are its
+    /// children (nullify on the Baby side is a cascade, so deleting a baby deletes
+    /// its feeds). Set alongside `babyID` on create.
+    @NSManaged var baby: Baby?
+
+    // Optional scalars are stored as NSNumber so nil (not recorded) stays distinct
+    // from zero. The typed accessors below are the public API the app uses.
+    @NSManaged private var volumeNumber: NSNumber?
+    @NSManaged private var leftMinutesNumber: NSNumber?
+    @NSManaged private var rightMinutesNumber: NSNumber?
+
+    static func fetchRequest() -> NSFetchRequest<Feed> {
+        NSFetchRequest<Feed>(entityName: "Feed")
+    }
+
     /// Bottle volume in canonical milliliters (bottle feeds).
-    var volume: Double?
-    /// Nursing minutes on the left side (breast feeds).
-    var leftMinutes: Int?
-    /// Nursing minutes on the right side (breast feeds).
-    var rightMinutes: Int?
-    /// Reserved for a later phase (per-feed note).
-    var note: String?
+    var volume: Double? {
+        get { volumeNumber?.doubleValue }
+        set { volumeNumber = newValue.map { NSNumber(value: $0) } }
+    }
 
-    init(
-        id: UUID = UUID(),
-        babyID: UUID,
-        timestamp: Date = Date(),
-        kind: String = "unspecified",
-        volume: Double? = nil,
-        leftMinutes: Int? = nil,
-        rightMinutes: Int? = nil,
-        note: String? = nil
-    ) {
-        self.id = id
-        self.babyID = babyID
-        self.timestamp = timestamp
-        self.kind = kind
-        self.volume = volume
-        self.leftMinutes = leftMinutes
-        self.rightMinutes = rightMinutes
-        self.note = note
+    /// Nursing minutes on the left side (breast feeds).
+    var leftMinutes: Int? {
+        get { leftMinutesNumber?.intValue }
+        set { leftMinutesNumber = newValue.map { NSNumber(value: $0) } }
+    }
+
+    /// Nursing minutes on the right side (breast feeds).
+    var rightMinutes: Int? {
+        get { rightMinutesNumber?.intValue }
+        set { rightMinutesNumber = newValue.map { NSNumber(value: $0) } }
     }
 
     /// Typed accessor over the CloudKit-safe raw `kind` string.
     var feedKind: FeedKind {
         get { FeedKind(rawValue: kind) ?? .unspecified }
         set { kind = newValue.rawValue }
+    }
+
+    /// Typed accessor for a bottle feed's contents (formula vs expressed breast
+    /// milk). Only meaningful for bottle feeds; nil when not recorded.
+    var bottle: BottleContent? {
+        get { bottleContentRaw.flatMap(BottleContent.init(rawValue:)) }
+        set { bottleContentRaw = newValue?.rawValue }
     }
 
     /// Total nursing minutes across both sides (breast feeds). nil when none recorded.
@@ -79,6 +99,20 @@ enum FeedKind: String, CaseIterable, Hashable {
         case .bottle: return "Bottle"
         case .breast: return "Breast"
         case .unspecified: return "Other"
+        }
+    }
+}
+
+/// What a bottle feed contained (story 8.7). Stored as the raw string in
+/// `Feed.bottleContentRaw` for CloudKit safety. Applies to bottle feeds only.
+enum BottleContent: String, CaseIterable, Hashable {
+    case formula
+    case breastMilk
+
+    var label: String {
+        switch self {
+        case .formula: return "Formula"
+        case .breastMilk: return "Breast milk"
         }
     }
 }

@@ -27,6 +27,7 @@ final class AppState {
     enum Sheet: Identifiable {
         case addBaby
         case manageBabies
+        case family
         var id: Self { self }
     }
 

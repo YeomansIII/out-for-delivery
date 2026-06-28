@@ -4,13 +4,16 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 import ActivityKit
+import UniformTypeIdentifiers
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
-    @Query(sort: \Contraction.startDate, order: .reverse) private var contractionsNewestFirst: [Contraction]
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(key: "startDate", ascending: false)],
+        animation: .default
+    ) private var contractionsNewestFirst: FetchedResults<Contraction>
 
     @State private var service = ContractionService.shared
 
@@ -22,6 +25,13 @@ struct ContentView: View {
     @State private var showClearAllConfirm = false
     @State private var showExpiredBanner = false
     @State private var editingContraction: Contraction?
+
+    @State private var showCSVImporter = false
+    @State private var importResultMessage = ""
+    @State private var showImportResult = false
+
+    /// The contraction-log share controls, when presented.
+    @State private var shareTarget: ShareTarget?
 
     var body: some View {
         NavigationStack {
@@ -77,6 +87,20 @@ struct ContentView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text("This permanently deletes the entire log on this device and across iCloud.")
+            }
+            .fileImporter(
+                isPresented: $showCSVImporter,
+                allowedContentTypes: [.commaSeparatedText]
+            ) { result in
+                handleImport(result)
+            }
+            .alert("Import", isPresented: $showImportResult) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(importResultMessage)
+            }
+            .sheet(item: $shareTarget) { target in
+                RecordShareView(target: target)
             }
             .task {
                 service.refresh()
@@ -165,6 +189,19 @@ struct ContentView: View {
                 ModeMenuButtons()
                 Divider()
                 Button {
+                    shareTarget = ShareTarget(
+                        objectID: PersistenceController.shared.laborLog.objectID,
+                        title: "Contraction history"
+                    )
+                } label: {
+                    Label("Share contraction history", systemImage: "person.crop.circle.badge.plus")
+                }
+                Button {
+                    showCSVImporter = true
+                } label: {
+                    Label("Import tracking history", systemImage: "square.and.arrow.down")
+                }
+                Button {
                     Task {
                         liveActivityHidden.toggle()
                         await syncLiveActivity()
@@ -216,6 +253,26 @@ struct ContentView: View {
     private var csvURL: URL? {
         let all = service.allContractions()
         return all.isEmpty ? nil : CSVExporter.makeCSV(contractions: all)
+    }
+
+    /// Imports a picked CSV (any recognized tracking history) and shows the result.
+    private func handleImport(_ result: Result<URL, Error>) {
+        switch result {
+        case .success(let url):
+            do {
+                let summary = try CSVImport.importFile(
+                    at: url,
+                    context: CSVImportContext(activeBabyID: nil)
+                )
+                importResultMessage = summary.message
+                service.refresh()
+            } catch {
+                importResultMessage = error.localizedDescription
+            }
+        case .failure(let error):
+            importResultMessage = error.localizedDescription
+        }
+        showImportResult = true
     }
 
     private var chronological: [Contraction] {
@@ -290,5 +347,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Contraction.self, inMemory: true)
+        .environment(\.managedObjectContext, PersistenceController.preview.viewContext)
 }

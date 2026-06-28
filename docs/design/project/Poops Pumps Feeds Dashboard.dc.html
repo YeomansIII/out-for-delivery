@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; font-family:'Hanken Grotesk', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+    .mono { font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+  </style>
+</helmet>
+
+<!-- ============================ FRAME 01 · DASHBOARD A ============================ -->
+<div style="position:absolute; left:80px; top:140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">01 &middot; Dashboard <span style="font-weight:500; color:#8a8074;">&mdash; status at a glance</span></div>
+  <div data-screen-label="Dashboard" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:radial-gradient(125% 80% at 50% -8%, #271f18 0%, #18130f 52%, #120e0b 100%); box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <!-- status bar -->
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono'; color:#f4efe9;">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2C5.5 2 2.8 3.2 1 5l1.4 1.5C3.9 5 6.1 4 8.5 4s4.6 1 6.1 2.5L16 5C14.2 3.2 11.5 2 8.5 2z" opacity=".85"/><path d="M8.5 6.6c-1.6 0-3 .6-4 1.6L8.5 12l4-3.8c-1-1-2.4-1.6-4-1.6z"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/><rect x="23.6" y="4.6" width="1.8" height="4" rx="1" fill="currentColor" opacity=".5"/></svg>
+      </div>
+    </div>
+
+    <!-- scroll content -->
+    <div style="padding:6px 20px 110px; display:flex; flex-direction:column; gap:14px;">
+
+      <!-- baby header -->
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:46px; height:46px; border-radius:50%; background:oklch(0.80 0.085 60 / .22); border:1px solid oklch(0.80 0.085 60 / .35); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.085 60);">
+            <span class="mono" style="font:600 18px 'IBM Plex Mono';">J</span>
+          </div>
+          <div>
+            <div style="font:800 26px 'Hanken Grotesk'; letter-spacing:-.02em; line-height:1;">Juniper</div>
+            <div style="font:500 13.5px 'Hanken Grotesk'; color:#b3a89b; margin-top:3px;">9 days old</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; padding:7px 10px 7px 8px; border-radius:20px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);">
+          <div style="width:24px; height:24px; border-radius:50%; background:oklch(0.79 0.07 330 / .28); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.07 330);"><span class="mono" style="font:600 11px 'IBM Plex Mono';">H</span></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b3a89b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- feed reminder card -->
+      <div style="border-radius:24px; padding:16px 18px; background:oklch(0.80 0.085 60 / .10); backdrop-filter:blur(24px) saturate(160%); -webkit-backdrop-filter:blur(24px) saturate(160%); border:1px solid oklch(0.80 0.085 60 / .22); box-shadow:inset 0 1px 0 rgba(255,255,255,.10);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:32px; height:32px; border-radius:50%; background:oklch(0.80 0.085 60 / .22); display:flex; align-items:center; justify-content:center; color:oklch(0.88 0.085 60);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a5 5 0 0 0-5 5c0 5-2 6-2 6h14s-2-1-2-6a5 5 0 0 0-5-5Z"/><path d="M10.4 20a1.7 1.7 0 0 0 3.2 0"/></svg>
+            </div>
+            <div>
+              <div style="font:600 13.5px 'Hanken Grotesk'; color:#f4efe9;">Next feed reminder</div>
+              <div style="font:500 12px 'Hanken Grotesk'; color:#b3a89b; margin-top:1px;">Arms again at 2:55 PM</div>
+            </div>
+          </div>
+          <div class="mono" style="font:600 24px 'IBM Plex Mono'; color:oklch(0.90 0.085 60);">1:12:46</div>
+        </div>
+        <div style="margin-top:13px; height:6px; border-radius:4px; background:rgba(255,255,255,.10); overflow:hidden;">
+          <div style="width:62%; height:100%; border-radius:4px; background:oklch(0.80 0.10 60);"></div>
+        </div>
+      </div>
+
+      <!-- recent activity -->
+      <div>
+        <div style="font:700 12px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.06em; text-transform:uppercase; margin:2px 2px 9px;">Recent</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px;">
+
+          <!-- last feed -->
+          <div style="border-radius:20px; padding:13px 11px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.80 0.085 60 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.085 60); margin-bottom:9px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M11 3v2M13 3v2M9.4 8.6a3 3 0 0 1 5.2 0V18a3 3 0 0 1-6 0V9.4c0-.3.1-.5.3-.8Z"/><path d="M9 12h6"/></svg>
+            </div>
+            <div style="font:600 11px 'Hanken Grotesk'; color:#b3a89b;">Last feed</div>
+            <div class="mono" style="font:600 17px 'IBM Plex Mono'; color:#f4efe9; margin-top:3px;">1h 47m</div>
+            <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:4px;">90 ml &middot; formula</div>
+          </div>
+
+          <!-- last diaper -->
+          <div style="border-radius:20px; padding:13px 11px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.82 0.055 140 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.06 140); margin-bottom:9px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg>
+            </div>
+            <div style="font:600 11px 'Hanken Grotesk'; color:#b3a89b;">Last change</div>
+            <div class="mono" style="font:600 17px 'IBM Plex Mono'; color:#f4efe9; margin-top:3px;">38m</div>
+            <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:4px;">wet</div>
+          </div>
+
+          <!-- last pump -->
+          <div style="border-radius:20px; padding:13px 11px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.79 0.07 330 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.07 330); margin-bottom:9px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v5.5L6.7 16.3A2.4 2.4 0 0 0 8.9 19.8h6.2a2.4 2.4 0 0 0 2.2-3.5L13.5 8.5V3"/><path d="M8.6 14h6.8"/></svg>
+            </div>
+            <div style="font:600 11px 'Hanken Grotesk'; color:#b3a89b;">Last pump</div>
+            <div class="mono" style="font:600 17px 'IBM Plex Mono'; color:#f4efe9; margin-top:3px;">2h 10m</div>
+            <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:4px;">120 ml</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- daily totals -->
+      <div style="border-radius:22px; padding:15px 6px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center;">
+        <div style="flex:1; text-align:center;">
+          <div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#f4efe9;">7</div>
+          <div style="font:600 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">feeds</div>
+        </div>
+        <div style="width:1px; height:30px; background:rgba(255,255,255,.10);"></div>
+        <div style="flex:1; text-align:center;">
+          <div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#f4efe9;">6</div>
+          <div style="font:600 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">wet</div>
+        </div>
+        <div style="width:1px; height:30px; background:rgba(255,255,255,.10);"></div>
+        <div style="flex:1; text-align:center;">
+          <div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#f4efe9;">3</div>
+          <div style="font:600 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">dirty</div>
+        </div>
+        <div style="width:1px; height:30px; background:rgba(255,255,255,.10);"></div>
+        <div style="flex:1; text-align:center;">
+          <div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#f4efe9;">240</div>
+          <div style="font:600 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">ml pumped</div>
+        </div>
+      </div>
+
+      <!-- quick log -->
+      <div>
+        <div style="font:700 12px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.06em; text-transform:uppercase; margin:4px 2px 9px;">Log</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+          <button style="border:none; cursor:pointer; border-radius:20px; padding:16px 8px 13px; background:oklch(0.80 0.10 60); color:#26190f; display:flex; flex-direction:column; align-items:center; gap:8px; box-shadow:0 6px 18px oklch(0.80 0.10 60 / .28);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M11 3v2M13 3v2M9.4 8.6a3 3 0 0 1 5.2 0V18a3 3 0 0 1-6 0V9.4c0-.3.1-.5.3-.8Z"/><path d="M9 12h6"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Feed</span>
+          </button>
+          <button style="border:none; cursor:pointer; border-radius:20px; padding:16px 8px 13px; background:oklch(0.82 0.07 140); color:#1b2517; display:flex; flex-direction:column; align-items:center; gap:8px; box-shadow:0 6px 18px oklch(0.82 0.07 140 / .26);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Diaper</span>
+          </button>
+          <button style="border:none; cursor:pointer; border-radius:20px; padding:16px 8px 13px; background:oklch(0.79 0.09 330); color:#241525; display:flex; flex-direction:column; align-items:center; gap:8px; box-shadow:0 6px 18px oklch(0.79 0.09 330 / .26);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v5.5L6.7 16.3A2.4 2.4 0 0 0 8.9 19.8h6.2a2.4 2.4 0 0 0 2.2-3.5L13.5 8.5V3"/><path d="M8.6 14h6.8"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Pump</span>
+          </button>
+        </div>
+        <button style="margin-top:10px; width:100%; border:1px solid rgba(255,255,255,.10); cursor:pointer; border-radius:16px; padding:13px 16px; background:rgba(255,255,255,.04); color:#d8cec2; display:flex; align-items:center; justify-content:space-between;">
+          <span style="display:flex; align-items:center; gap:10px;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="oklch(0.84 0.075 90)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M5 16l4-5 3 3 5-7"/></svg>
+            <span style="font:600 14px 'Hanken Grotesk';">Weight &amp; growth</span>
+          </span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a8074" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- liquid glass tab bar -->
+    <div style="position:absolute; bottom:22px; left:14px; right:14px; height:64px; border-radius:30px; background:rgba(30,24,18,.55); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border:1px solid rgba(255,255,255,.10); box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 12px 30px rgba(0,0,0,.45); display:flex; align-items:center; justify-content:space-around; padding:0 6px;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:oklch(0.86 0.085 60);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>
+        <span style="font:700 10px 'Hanken Grotesk';">Home</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#8a8074;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Timeline</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#8a8074;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M5 16l4-5 3 3 5-7"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Growth</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#8a8074;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.3a3.1 3.1 0 0 1 0 5.8"/><path d="M17 14.6a5.5 5.5 0 0 1 3.4 4.4"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Family</span>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+
+<!-- ============================ FRAME 02 · FEED SHEET ============================ -->
+<div style="position:absolute; left:553px; top:140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">02 &middot; Log feed <span style="font-weight:500; color:#8a8074;">&mdash; bottle</span></div>
+  <div data-screen-label="Feed sheet" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:#0e0b09; box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between; opacity:.5;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono';">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <!-- sheet -->
+    <div style="position:absolute; left:0; right:0; bottom:0; top:88px; background:#1d1713; border-radius:30px 30px 0 0; border-top:1px solid rgba(255,255,255,.10); box-shadow:0 -22px 55px rgba(0,0,0,.55); display:flex; flex-direction:column;">
+      <div style="width:38px; height:5px; border-radius:3px; background:rgba(255,255,255,.18); margin:10px auto 0;"></div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 22px 6px;">
+        <span style="font:600 15px 'Hanken Grotesk'; color:#b3a89b;">Cancel</span>
+        <span style="font:800 18px 'Hanken Grotesk';">Log feed</span>
+        <span style="width:48px;"></span>
+      </div>
+
+      <div style="flex:1; overflow:hidden; padding:8px 22px 0; display:flex; flex-direction:column; gap:18px;">
+
+        <!-- segmented -->
+        <div style="display:flex; padding:4px; border-radius:16px; background:rgba(0,0,0,.30); border:1px solid rgba(255,255,255,.06);">
+          <div style="flex:1; text-align:center; padding:10px; border-radius:12px; background:oklch(0.80 0.085 60 / .20); color:#f4efe9; font:700 14px 'Hanken Grotesk'; box-shadow:inset 0 0 0 1px oklch(0.80 0.085 60 / .35);">Bottle</div>
+          <div style="flex:1; text-align:center; padding:10px; color:#9a8f82; font:600 14px 'Hanken Grotesk';">Nursing</div>
+        </div>
+
+        <!-- volume -->
+        <div style="display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:4px;">
+          <div style="display:flex; align-items:center; gap:24px;">
+            <button style="width:50px; height:50px; border-radius:50%; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:#f4efe9; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg>
+            </button>
+            <div style="display:flex; align-items:baseline; gap:6px;">
+              <span class="mono" style="font:600 58px 'IBM Plex Mono'; color:#f4efe9; line-height:1;">90</span>
+              <span style="font:600 20px 'Hanken Grotesk'; color:#b3a89b;">ml</span>
+            </div>
+            <button style="width:50px; height:50px; border-radius:50%; border:none; background:oklch(0.80 0.10 60); color:#26190f; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>
+            </button>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <div style="padding:7px 14px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:600 13px 'IBM Plex Mono'; color:#b3a89b;">60</div>
+            <div style="padding:7px 14px; border-radius:14px; background:oklch(0.80 0.085 60 / .18); border:1px solid oklch(0.80 0.085 60 / .3); font:600 13px 'IBM Plex Mono'; color:oklch(0.88 0.085 60);">90</div>
+            <div style="padding:7px 14px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:600 13px 'IBM Plex Mono'; color:#b3a89b;">120</div>
+            <div style="padding:7px 14px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:600 13px 'Hanken Grotesk'; color:#b3a89b;">ml &middot; oz</div>
+          </div>
+        </div>
+
+        <!-- type -->
+        <div>
+          <div style="font:700 12px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.05em; text-transform:uppercase; margin:0 2px 9px;">Type</div>
+          <div style="display:flex; gap:10px;">
+            <div style="flex:1; text-align:center; padding:13px; border-radius:16px; background:oklch(0.80 0.085 60 / .16); border:1px solid oklch(0.80 0.085 60 / .32); color:#f4efe9; font:700 14px 'Hanken Grotesk';">Formula</div>
+            <div style="flex:1; text-align:center; padding:13px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:#b3a89b; font:600 14px 'Hanken Grotesk';">Breast milk</div>
+          </div>
+        </div>
+
+        <!-- time + note -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <span style="font:600 14px 'Hanken Grotesk'; color:#d8cec2;">Time</span>
+            <span style="display:flex; align-items:center; gap:8px; font:600 14px 'IBM Plex Mono'; color:#f4efe9;">Now &middot; 2:08 PM
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a8074" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L20 8l-4-4L4 16v4Z"/><path d="M14 6l4 4"/></svg>
+            </span>
+          </div>
+          <div style="padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:500 14px 'Hanken Grotesk'; color:#7d7368;">Add a note &middot; latch, spit-up, fussiness</div>
+        </div>
+      </div>
+
+      <!-- primary -->
+      <div style="padding:14px 22px 30px;">
+        <button style="width:100%; border:none; cursor:pointer; height:56px; border-radius:18px; background:oklch(0.80 0.10 60); color:#26190f; font:800 17px 'Hanken Grotesk'; box-shadow:0 8px 22px oklch(0.80 0.10 60 / .3);">Save feed</button>
+        <div style="text-align:center; margin-top:10px; font:500 12px 'Hanken Grotesk'; color:#7d7368;">Logging by Mara &middot; resets feed reminder to 3:00:00</div>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 03 · NURSING TIMER (RUNNING) ============================ -->
+<div style="position:absolute; left:1026px; top:140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">03 &middot; Nursing timer <span style="font-weight:500; color:#8a8074;">&mdash; tap-a-side, running</span></div>
+  <div data-screen-label="Nursing timer" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:#0e0b09; box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between; opacity:.5;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono';">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <div style="position:absolute; left:0; right:0; bottom:0; top:88px; background:#1d1713; border-radius:30px 30px 0 0; border-top:1px solid rgba(255,255,255,.10); box-shadow:0 -22px 55px rgba(0,0,0,.55); display:flex; flex-direction:column;">
+      <div style="width:38px; height:5px; border-radius:3px; background:rgba(255,255,255,.18); margin:10px auto 0;"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 22px 6px;">
+        <span style="font:600 15px 'Hanken Grotesk'; color:#b3a89b;">Cancel</span>
+        <span style="font:800 18px 'Hanken Grotesk';">Nursing</span>
+        <span style="width:48px;"></span>
+      </div>
+
+      <!-- session total + live wall clock -->
+      <div style="text-align:center; padding:16px 0 2px;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:7px; font:700 12px 'Hanken Grotesk'; color:oklch(0.86 0.085 60); letter-spacing:.05em; text-transform:uppercase;">
+          <span style="width:8px; height:8px; border-radius:50%; background:oklch(0.82 0.12 60); box-shadow:0 0 10px oklch(0.82 0.14 60);"></span>Session total
+        </div>
+        <div class="mono" style="font:600 46px 'IBM Plex Mono'; color:#f4efe9; line-height:1.2; margin-top:4px;">14:32</div>
+        <div style="margin-top:11px;">
+          <div style="display:inline-flex; align-items:center; gap:9px; padding:7px 14px; border-radius:15px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <span style="font:700 10px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.06em; text-transform:uppercase;">Clock</span>
+            <span class="mono" style="font:600 16px 'IBM Plex Mono'; color:#e6dccf;">{{ wallClock }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- two big tap-a-side targets -->
+      <div style="flex:1; display:flex; gap:14px; padding:16px 22px 0;">
+        <button style="flex:1; border:none; cursor:pointer; border-radius:24px; background:oklch(0.80 0.085 60 / .16); border:1.5px solid oklch(0.80 0.085 60 / .45); box-shadow:0 0 0 4px oklch(0.80 0.085 60 / .10); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; color:#f4efe9;">
+          <div style="width:62px; height:62px; border-radius:50%; background:oklch(0.80 0.10 60); color:#26190f; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="6" width="3.6" height="12" rx="1.3"/><rect x="13.4" y="6" width="3.6" height="12" rx="1.3"/></svg></div>
+          <div style="text-align:center;"><div style="font:800 19px 'Hanken Grotesk';">Left</div><div class="mono" style="font:600 24px 'IBM Plex Mono'; color:#f4efe9; margin-top:4px;">12:04</div></div>
+          <div style="font:700 10px 'Hanken Grotesk'; color:oklch(0.88 0.085 60); letter-spacing:.05em; text-transform:uppercase;">Timing &middot; tap to pause</div>
+        </button>
+        <button style="flex:1; border:none; cursor:pointer; border-radius:24px; background:rgba(255,255,255,.05); border:1.5px solid rgba(255,255,255,.10); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; color:#d8cec2;">
+          <div style="width:62px; height:62px; border-radius:50%; background:rgba(255,255,255,.08); color:#f4efe9; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div style="text-align:center;"><div style="font:800 19px 'Hanken Grotesk';">Right</div><div class="mono" style="font:600 24px 'IBM Plex Mono'; color:#b3a89b; margin-top:4px;">02:28</div></div>
+          <div style="font:700 10px 'Hanken Grotesk'; color:#7d7368; letter-spacing:.05em; text-transform:uppercase;">Tap to switch</div>
+        </button>
+      </div>
+
+      <div style="text-align:center; padding:12px 22px 0; font:500 12px 'Hanken Grotesk'; color:#8a8074;">Haptic confirms each tap, so you can keep your eyes on the baby.</div>
+
+      <!-- manual minutes per side (clock-watching fallback) -->
+      <div style="padding:14px 22px 0;">
+        <div style="font:700 11px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.05em; text-transform:uppercase; margin:0 2px 9px;">Watching the clock instead? Enter minutes</div>
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1; display:flex; align-items:center; justify-content:space-between; padding:10px 11px 10px 14px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <div><div style="font:700 10px 'Hanken Grotesk'; color:#9a8f82; letter-spacing:.04em; text-transform:uppercase;">Left</div><div style="display:flex; align-items:baseline; gap:4px; margin-top:2px;"><span class="mono" style="font:600 22px 'IBM Plex Mono'; color:#f4efe9;">12</span><span style="font:600 11px 'Hanken Grotesk'; color:#b3a89b;">min</span></div></div>
+            <div style="display:flex; gap:6px;">
+              <button style="width:32px; height:32px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#f4efe9; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg></button>
+              <button style="width:32px; height:32px; border-radius:10px; border:none; background:oklch(0.80 0.10 60); color:#26190f; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></button>
+            </div>
+          </div>
+          <div style="flex:1; display:flex; align-items:center; justify-content:space-between; padding:10px 11px 10px 14px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <div><div style="font:700 10px 'Hanken Grotesk'; color:#9a8f82; letter-spacing:.04em; text-transform:uppercase;">Right</div><div style="display:flex; align-items:baseline; gap:4px; margin-top:2px;"><span class="mono" style="font:600 22px 'IBM Plex Mono'; color:#f4efe9;">3</span><span style="font:600 11px 'Hanken Grotesk'; color:#b3a89b;">min</span></div></div>
+            <div style="display:flex; gap:6px;">
+              <button style="width:32px; height:32px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#f4efe9; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg></button>
+              <button style="width:32px; height:32px; border-radius:10px; border:none; background:oklch(0.80 0.10 60); color:#26190f; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:14px 22px 30px;">
+        <button style="width:100%; border:none; cursor:pointer; height:56px; border-radius:18px; background:oklch(0.80 0.10 60); color:#26190f; font:800 17px 'Hanken Grotesk'; box-shadow:0 8px 22px oklch(0.80 0.10 60 / .3);">Stop &amp; save</button>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 04 · DIAPER SHEET ============================ -->
+<div style="position:absolute; left:1499px; top:140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">04 &middot; Log diaper</div>
+  <div data-screen-label="Diaper sheet" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:#0e0b09; box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between; opacity:.5;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono';">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <div style="position:absolute; left:0; right:0; bottom:0; top:88px; background:#1d1713; border-radius:30px 30px 0 0; border-top:1px solid rgba(255,255,255,.10); box-shadow:0 -22px 55px rgba(0,0,0,.55); display:flex; flex-direction:column;">
+      <div style="width:38px; height:5px; border-radius:3px; background:rgba(255,255,255,.18); margin:10px auto 0;"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 22px 6px;">
+        <span style="font:600 15px 'Hanken Grotesk'; color:#b3a89b;">Cancel</span>
+        <span style="font:800 18px 'Hanken Grotesk';">Log diaper</span>
+        <span style="width:48px;"></span>
+      </div>
+
+      <div style="flex:1; overflow:hidden; padding:8px 22px 0; display:flex; flex-direction:column; gap:18px;">
+
+        <!-- type tiles -->
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:9px; padding:18px 8px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:#b3a89b;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Wet</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:9px; padding:18px 8px; border-radius:18px; background:oklch(0.82 0.055 140 / .16); border:1px solid oklch(0.82 0.055 140 / .34); color:oklch(0.88 0.06 140); box-shadow:0 0 0 3px oklch(0.82 0.055 140 / .10);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/><path d="M9 13.5c1 1 2 1.4 3 1.4s2-.4 3-1.4"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Dirty</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:9px; padding:18px 8px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:#b3a89b;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4c2.2 2.6 4 4.8 4 6.9a4 4 0 1 1-8 0C5 8.8 6.8 6.6 9 4Z"/><path d="M16 9c1.6 1.9 2.8 3.5 2.8 5a2.8 2.8 0 1 1-5.6 0c0-1.5 1.2-3.1 2.8-5Z"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Both</span>
+          </div>
+        </div>
+
+        <!-- color (dirty) -->
+        <div>
+          <div style="font:700 12px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.05em; text-transform:uppercase; margin:0 2px 9px;">Color</div>
+          <div style="display:flex; gap:12px;">
+            <div style="width:42px; height:42px; border-radius:50%; background:#d9b85a; box-shadow:0 0 0 3px oklch(0.82 0.055 140 / .5);"></div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#9aa15a;"></div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#8a6a3e;"></div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#3a2c20;"></div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#b5564a;"></div>
+            <div style="width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,.05); border:1.5px dashed rgba(255,255,255,.28); display:flex; align-items:center; justify-content:center; color:#9a8f82;"><span class="mono" style="font:600 17px 'IBM Plex Mono';">?</span></div>
+          </div>
+        </div>
+
+        <!-- consistency -->
+        <div>
+          <div style="font:700 12px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.05em; text-transform:uppercase; margin:0 2px 9px;">Consistency</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <div style="padding:9px 15px; border-radius:14px; background:oklch(0.82 0.055 140 / .16); border:1px solid oklch(0.82 0.055 140 / .32); font:600 13px 'Hanken Grotesk'; color:oklch(0.88 0.06 140);">Seedy</div>
+            <div style="padding:9px 15px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:600 13px 'Hanken Grotesk'; color:#b3a89b;">Loose</div>
+            <div style="padding:9px 15px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:600 13px 'Hanken Grotesk'; color:#b3a89b;">Firm</div>
+            <div style="padding:9px 15px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:600 13px 'Hanken Grotesk'; color:#b3a89b;">Mucousy</div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <span style="font:600 14px 'Hanken Grotesk'; color:#d8cec2;">Time</span>
+            <span style="display:flex; align-items:center; gap:8px; font:600 14px 'IBM Plex Mono'; color:#f4efe9;">Now &middot; 2:46 PM
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a8074" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L20 8l-4-4L4 16v4Z"/><path d="M14 6l4 4"/></svg>
+            </span>
+          </div>
+          <div style="padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); font:500 14px 'Hanken Grotesk'; color:#7d7368;">Add a note &middot; blood, rash</div>
+        </div>
+      </div>
+
+      <div style="padding:14px 22px 30px;">
+        <button style="width:100%; border:none; cursor:pointer; height:56px; border-radius:18px; background:oklch(0.82 0.09 140); color:#1b2517; font:800 17px 'Hanken Grotesk'; box-shadow:0 8px 22px oklch(0.82 0.07 140 / .3);">Save diaper</button>
+        <div style="text-align:center; margin-top:10px; font:500 12px 'Hanken Grotesk'; color:#7d7368;">Logging by Mara &middot; 7th change today</div>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 05 · PUMP SHEET ============================ -->
+<div style="position:absolute; left:1972px; top:140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">05 &middot; Log pump</div>
+  <div data-screen-label="Pump sheet" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:#0e0b09; box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between; opacity:.5;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono';">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <div style="position:absolute; left:0; right:0; bottom:0; top:88px; background:#1d1713; border-radius:30px 30px 0 0; border-top:1px solid rgba(255,255,255,.10); box-shadow:0 -22px 55px rgba(0,0,0,.55); display:flex; flex-direction:column;">
+      <div style="width:38px; height:5px; border-radius:3px; background:rgba(255,255,255,.18); margin:10px auto 0;"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 22px 6px;">
+        <span style="font:600 15px 'Hanken Grotesk'; color:#b3a89b;">Cancel</span>
+        <span style="font:800 18px 'Hanken Grotesk';">Log pump</span>
+        <span style="width:48px;"></span>
+      </div>
+
+      <div style="flex:1; overflow:hidden; padding:8px 22px 0; display:flex; flex-direction:column; gap:18px;">
+
+        <!-- per side volume -->
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1; padding:16px; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <div style="font:700 12px 'Hanken Grotesk'; color:#9a8f82; letter-spacing:.04em; text-transform:uppercase;">Left</div>
+            <div style="display:flex; align-items:baseline; gap:5px; margin-top:8px;">
+              <span class="mono" style="font:600 34px 'IBM Plex Mono'; color:#f4efe9;">70</span>
+              <span style="font:600 14px 'Hanken Grotesk'; color:#b3a89b;">ml</span>
+            </div>
+            <div style="display:flex; gap:7px; margin-top:12px;">
+              <button style="flex:1; height:34px; border-radius:11px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#f4efe9; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg></button>
+              <button style="flex:1; height:34px; border-radius:11px; border:none; background:oklch(0.79 0.09 330); color:#241525; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></button>
+            </div>
+          </div>
+          <div style="flex:1; padding:16px; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <div style="font:700 12px 'Hanken Grotesk'; color:#9a8f82; letter-spacing:.04em; text-transform:uppercase;">Right</div>
+            <div style="display:flex; align-items:baseline; gap:5px; margin-top:8px;">
+              <span class="mono" style="font:600 34px 'IBM Plex Mono'; color:#f4efe9;">85</span>
+              <span style="font:600 14px 'Hanken Grotesk'; color:#b3a89b;">ml</span>
+            </div>
+            <div style="display:flex; gap:7px; margin-top:12px;">
+              <button style="flex:1; height:34px; border-radius:11px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#f4efe9; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg></button>
+              <button style="flex:1; height:34px; border-radius:11px; border:none; background:oklch(0.79 0.09 330); color:#241525; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- total -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:15px 18px; border-radius:18px; background:oklch(0.79 0.07 330 / .14); border:1px solid oklch(0.79 0.07 330 / .30);">
+          <span style="font:700 14px 'Hanken Grotesk'; color:#f4efe9;">Total</span>
+          <span style="display:flex; align-items:baseline; gap:5px;"><span class="mono" style="font:600 26px 'IBM Plex Mono'; color:oklch(0.90 0.07 330);">155</span><span style="font:600 14px 'Hanken Grotesk'; color:#b3a89b;">ml</span></span>
+        </div>
+
+        <!-- duration -->
+        <div>
+          <div style="font:700 12px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.05em; text-transform:uppercase; margin:0 2px 9px;">Duration</div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px 14px 18px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <span class="mono" style="font:600 24px 'IBM Plex Mono'; color:#f4efe9;">18:00</span>
+            <div style="display:flex; gap:8px;">
+              <button style="padding:8px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#d8cec2; font:600 13px 'Hanken Grotesk'; cursor:pointer;">Edit</button>
+              <button style="padding:8px 14px; border-radius:12px; border:none; background:oklch(0.79 0.09 330); color:#241525; font:700 13px 'Hanken Grotesk'; cursor:pointer; display:flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Time it</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+          <span style="font:600 14px 'Hanken Grotesk'; color:#d8cec2;">Time</span>
+          <span style="display:flex; align-items:center; gap:8px; font:600 14px 'IBM Plex Mono'; color:#f4efe9;">Now &middot; 2:30 PM
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a8074" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L20 8l-4-4L4 16v4Z"/><path d="M14 6l4 4"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div style="padding:14px 22px 30px;">
+        <button style="width:100%; border:none; cursor:pointer; height:56px; border-radius:18px; background:oklch(0.79 0.09 330); color:#241525; font:800 17px 'Hanken Grotesk'; box-shadow:0 8px 22px oklch(0.79 0.09 330 / .3);">Save pump</button>
+        <div style="text-align:center; margin-top:10px; font:500 12px 'Hanken Grotesk'; color:#7d7368;">Logging by Mara &middot; 240 ml + 155 ml today</div>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 06 · GROWTH SHEET ============================ -->
+<div style="position:absolute; left:2445px; top:140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">06 &middot; Growth</div>
+  <div data-screen-label="Growth sheet" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:#0e0b09; box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between; opacity:.5;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono';">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <div style="position:absolute; left:0; right:0; bottom:0; top:88px; background:#1d1713; border-radius:30px 30px 0 0; border-top:1px solid rgba(255,255,255,.10); box-shadow:0 -22px 55px rgba(0,0,0,.55); display:flex; flex-direction:column;">
+      <div style="width:38px; height:5px; border-radius:3px; background:rgba(255,255,255,.18); margin:10px auto 0;"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 22px 6px;">
+        <span style="font:600 15px 'Hanken Grotesk'; color:#b3a89b;">Cancel</span>
+        <span style="font:800 18px 'Hanken Grotesk';">Add measurement</span>
+        <span style="width:48px;"></span>
+      </div>
+
+      <div style="flex:1; overflow:hidden; padding:8px 22px 0; display:flex; flex-direction:column; gap:14px;">
+
+        <!-- trend chart -->
+        <div style="border-radius:20px; padding:15px 16px 10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <span style="font:700 12px 'Hanken Grotesk'; color:#9a8f82; letter-spacing:.04em; text-transform:uppercase;">Weight &middot; last 9 days</span>
+            <span class="mono" style="font:600 13px 'IBM Plex Mono'; color:oklch(0.86 0.075 90);">+8%</span>
+          </div>
+          <svg width="100%" height="78" viewBox="0 0 320 78" preserveAspectRatio="none">
+            <polyline points="6,58 46,60 86,52 126,50 166,42 206,38 246,30 286,22 314,16" fill="none" stroke="oklch(0.84 0.075 90)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="314" cy="16" r="4" fill="oklch(0.86 0.10 90)"/>
+          </svg>
+        </div>
+
+        <!-- weight -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-radius:18px; background:oklch(0.84 0.075 90 / .12); border:1px solid oklch(0.84 0.075 90 / .28);">
+          <span style="font:700 14px 'Hanken Grotesk'; color:#f4efe9;">Weight</span>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="display:flex; align-items:baseline; gap:5px;"><span class="mono" style="font:600 30px 'IBM Plex Mono'; color:#f4efe9;">4.12</span><span style="font:600 14px 'Hanken Grotesk'; color:#b3a89b;">kg</span></span>
+            <div style="display:flex; padding:3px; border-radius:11px; background:rgba(0,0,0,.25);"><span style="padding:5px 9px; border-radius:8px; background:rgba(255,255,255,.12); font:700 11px 'Hanken Grotesk'; color:#f4efe9;">kg</span><span style="padding:5px 9px; font:600 11px 'Hanken Grotesk'; color:#9a8f82;">lb</span></div>
+          </div>
+        </div>
+
+        <!-- length -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+          <span style="font:700 14px 'Hanken Grotesk'; color:#d8cec2;">Length</span>
+          <span style="display:flex; align-items:baseline; gap:5px;"><span class="mono" style="font:600 26px 'IBM Plex Mono'; color:#f4efe9;">54.0</span><span style="font:600 14px 'Hanken Grotesk'; color:#b3a89b;">cm</span></span>
+        </div>
+
+        <!-- head -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+          <span style="font:700 14px 'Hanken Grotesk'; color:#d8cec2;">Head <span style="font-weight:500; color:#8a8074;">optional</span></span>
+          <span style="display:flex; align-items:baseline; gap:5px;"><span class="mono" style="font:600 26px 'IBM Plex Mono'; color:#f4efe9;">37.0</span><span style="font:600 14px 'Hanken Grotesk'; color:#b3a89b;">cm</span></span>
+        </div>
+
+        <!-- visit toggle + date -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+          <span style="font:600 14px 'Hanken Grotesk'; color:#d8cec2;">Taken at a pediatric visit</span>
+          <div style="width:46px; height:28px; border-radius:16px; background:oklch(0.84 0.075 90); position:relative;"><div style="position:absolute; top:2px; right:2px; width:24px; height:24px; border-radius:50%; background:#fff;"></div></div>
+        </div>
+      </div>
+
+      <div style="padding:14px 22px 30px;">
+        <button style="width:100%; border:none; cursor:pointer; height:56px; border-radius:18px; background:oklch(0.84 0.09 90); color:#251f0e; font:800 17px 'Hanken Grotesk'; box-shadow:0 8px 22px oklch(0.84 0.075 90 / .3);">Save measurement</button>
+        <div style="text-align:center; margin-top:10px; font:500 12px 'Hanken Grotesk'; color:#7d7368;">Jun 27 &middot; logging by Devin</div>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 07 · TIMELINE ============================ -->
+<div style="position:absolute; left:2918px; top:140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">07 &middot; Timeline <span style="font-weight:500; color:#8a8074;">&mdash; unified, with attribution</span></div>
+  <div data-screen-label="Timeline" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:radial-gradient(125% 80% at 50% -8%, #271f18 0%, #18130f 52%, #120e0b 100%); box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono'; color:#f4efe9;">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2C5.5 2 2.8 3.2 1 5l1.4 1.5C3.9 5 6.1 4 8.5 4s4.6 1 6.1 2.5L16 5C14.2 3.2 11.5 2 8.5 2z" opacity=".85"/><path d="M8.5 6.6c-1.6 0-3 .6-4 1.6L8.5 12l4-3.8c-1-1-2.4-1.6-4-1.6z"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/><rect x="23.6" y="4.6" width="1.8" height="4" rx="1" fill="currentColor" opacity=".5"/></svg>
+      </div>
+    </div>
+
+    <!-- header -->
+    <div style="padding:6px 20px 12px; display:flex; align-items:center; justify-content:space-between;">
+      <span style="font:800 26px 'Hanken Grotesk'; letter-spacing:-.02em;">Timeline</span>
+      <button style="display:flex; align-items:center; gap:6px; padding:9px 14px; border-radius:16px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.06); color:#f4efe9; cursor:pointer; font:700 13px 'Hanken Grotesk';">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add past
+      </button>
+    </div>
+
+    <!-- filters -->
+    <div style="padding:0 20px 12px; display:flex; gap:8px;">
+      <div style="padding:8px 15px; border-radius:14px; background:#f4efe9; color:#1a140f; font:700 13px 'Hanken Grotesk';">All</div>
+      <div style="padding:8px 15px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#b3a89b; font:600 13px 'Hanken Grotesk';">Feeds</div>
+      <div style="padding:8px 15px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#b3a89b; font:600 13px 'Hanken Grotesk';">Diapers</div>
+      <div style="padding:8px 15px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#b3a89b; font:600 13px 'Hanken Grotesk';">Pumps</div>
+    </div>
+
+    <div style="font:700 12px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.06em; text-transform:uppercase; padding:2px 22px 8px;">Today</div>
+
+    <!-- events -->
+    <div style="padding:0 16px; display:flex; flex-direction:column; gap:8px;">
+
+      <!-- feed -->
+      <div style="display:flex; align-items:center; gap:13px; padding:13px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.07);">
+        <div style="width:38px; height:38px; border-radius:11px; flex-shrink:0; background:oklch(0.80 0.085 60 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.085 60);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M11 3v2M13 3v2M9.4 8.6a3 3 0 0 1 5.2 0V18a3 3 0 0 1-6 0V9.4c0-.3.1-.5.3-.8Z"/><path d="M9 12h6"/></svg>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="font:700 14.5px 'Hanken Grotesk'; color:#f4efe9;">Bottle feed &middot; 90 ml formula</div>
+          <div style="display:flex; align-items:center; gap:6px; margin-top:3px;"><span style="width:15px; height:15px; border-radius:50%; background:oklch(0.80 0.085 60 / .3); font:600 8px 'IBM Plex Mono'; color:oklch(0.88 0.085 60); display:flex; align-items:center; justify-content:center;">M</span><span style="font:500 12px 'Hanken Grotesk'; color:#9a8f82;">logged by Mara</span></div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div class="mono" style="font:600 13px 'IBM Plex Mono'; color:#d8cec2;">2:08 PM</div>
+          <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">1h 47m ago</div>
+        </div>
+      </div>
+
+      <!-- diaper -->
+      <div style="display:flex; align-items:center; gap:13px; padding:13px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.07);">
+        <div style="width:38px; height:38px; border-radius:11px; flex-shrink:0; background:oklch(0.82 0.055 140 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.06 140);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="font:700 14.5px 'Hanken Grotesk'; color:#f4efe9;">Diaper &middot; wet</div>
+          <div style="display:flex; align-items:center; gap:6px; margin-top:3px;"><span style="width:15px; height:15px; border-radius:50%; background:oklch(0.79 0.07 330 / .3); font:600 8px 'IBM Plex Mono'; color:oklch(0.88 0.07 330); display:flex; align-items:center; justify-content:center;">D</span><span style="font:500 12px 'Hanken Grotesk'; color:#9a8f82;">logged by Devin</span></div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div class="mono" style="font:600 13px 'IBM Plex Mono'; color:#d8cec2;">1:32 PM</div>
+          <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">2h 23m ago</div>
+        </div>
+      </div>
+
+      <!-- nursing -->
+      <div style="display:flex; align-items:center; gap:13px; padding:13px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.07);">
+        <div style="width:38px; height:38px; border-radius:11px; flex-shrink:0; background:oklch(0.80 0.085 60 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.085 60);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19.5l-1.2-1.1C6.5 14.5 4 12.2 4 9.2 4 7 5.7 5.3 7.8 5.3c1.2 0 2.4.6 3.2 1.6L12 8l1-1.1c.8-1 2-1.6 3.2-1.6 2.1 0 3.8 1.7 3.8 3.9 0 3-2.5 5.3-6.8 9.2Z"/></svg>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="font:700 14.5px 'Hanken Grotesk'; color:#f4efe9;">Nursing &middot; 18 min &middot; L + R</div>
+          <div style="display:flex; align-items:center; gap:6px; margin-top:3px;"><span style="width:15px; height:15px; border-radius:50%; background:oklch(0.80 0.085 60 / .3); font:600 8px 'IBM Plex Mono'; color:oklch(0.88 0.085 60); display:flex; align-items:center; justify-content:center;">M</span><span style="font:500 12px 'Hanken Grotesk'; color:#9a8f82;">logged by Mara</span></div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div class="mono" style="font:600 13px 'IBM Plex Mono'; color:#d8cec2;">12:55 PM</div>
+          <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">3h 00m ago</div>
+        </div>
+      </div>
+
+      <!-- pump -->
+      <div style="display:flex; align-items:center; gap:13px; padding:13px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.07);">
+        <div style="width:38px; height:38px; border-radius:11px; flex-shrink:0; background:oklch(0.79 0.07 330 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.07 330);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v5.5L6.7 16.3A2.4 2.4 0 0 0 8.9 19.8h6.2a2.4 2.4 0 0 0 2.2-3.5L13.5 8.5V3"/><path d="M8.6 14h6.8"/></svg>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="font:700 14.5px 'Hanken Grotesk'; color:#f4efe9;">Pump &middot; 120 ml &middot; 16 min</div>
+          <div style="display:flex; align-items:center; gap:6px; margin-top:3px;"><span style="width:15px; height:15px; border-radius:50%; background:oklch(0.79 0.07 330 / .3); font:600 8px 'IBM Plex Mono'; color:oklch(0.88 0.07 330); display:flex; align-items:center; justify-content:center;">D</span><span style="font:500 12px 'Hanken Grotesk'; color:#9a8f82;">logged by Devin</span></div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div class="mono" style="font:600 13px 'IBM Plex Mono'; color:#d8cec2;">12:40 PM</div>
+          <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">3h 15m ago</div>
+        </div>
+      </div>
+
+      <!-- feed -->
+      <div style="display:flex; align-items:center; gap:13px; padding:13px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.07);">
+        <div style="width:38px; height:38px; border-radius:11px; flex-shrink:0; background:oklch(0.80 0.085 60 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.085 60);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M11 3v2M13 3v2M9.4 8.6a3 3 0 0 1 5.2 0V18a3 3 0 0 1-6 0V9.4c0-.3.1-.5.3-.8Z"/><path d="M9 12h6"/></svg>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="font:700 14.5px 'Hanken Grotesk'; color:#f4efe9;">Bottle feed &middot; 80 ml breast milk</div>
+          <div style="display:flex; align-items:center; gap:6px; margin-top:3px;"><span style="width:15px; height:15px; border-radius:50%; background:oklch(0.80 0.085 60 / .3); font:600 8px 'IBM Plex Mono'; color:oklch(0.88 0.085 60); display:flex; align-items:center; justify-content:center;">M</span><span style="font:500 12px 'Hanken Grotesk'; color:#9a8f82;">logged by Mara</span></div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div class="mono" style="font:600 13px 'IBM Plex Mono'; color:#d8cec2;">9:30 AM</div>
+          <div style="font:500 11px 'Hanken Grotesk'; color:#8a8074; margin-top:2px;">6h 25m ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- tab bar -->
+    <div style="position:absolute; bottom:22px; left:14px; right:14px; height:64px; border-radius:30px; background:rgba(30,24,18,.55); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border:1px solid rgba(255,255,255,.10); box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 12px 30px rgba(0,0,0,.45); display:flex; align-items:center; justify-content:space-around; padding:0 6px;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#8a8074;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Home</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:oklch(0.86 0.085 60);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/></svg>
+        <span style="font:700 10px 'Hanken Grotesk';">Timeline</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#8a8074;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M5 16l4-5 3 3 5-7"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Growth</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#8a8074;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.3a3.1 3.1 0 0 1 0 5.8"/><path d="M17 14.6a5.5 5.5 0 0 1 3.4 4.4"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Family</span>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 08 · DASHBOARD B (layout variation) ============================ -->
+<div style="position:absolute; left:80px; top:1140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">08 &middot; Dashboard <span style="font-weight:500; color:#8a8074;">&mdash; layout variation: feed-clock hero</span></div>
+  <div data-screen-label="Dashboard B" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:radial-gradient(125% 80% at 50% -8%, #271f18 0%, #18130f 52%, #120e0b 100%); box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono'; color:#f4efe9;">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <div style="padding:6px 22px 110px; display:flex; flex-direction:column; align-items:center;">
+
+      <!-- compact header -->
+      <div style="width:100%; display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:34px; height:34px; border-radius:50%; background:oklch(0.80 0.085 60 / .22); border:1px solid oklch(0.80 0.085 60 / .35); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.085 60);"><span class="mono" style="font:600 14px 'IBM Plex Mono';">J</span></div>
+          <div style="font:800 19px 'Hanken Grotesk';">Juniper <span style="font-weight:500; font-size:14px; color:#9a8f82;">&middot; 9d</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; padding:6px 9px 6px 7px; border-radius:18px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);">
+          <div style="width:22px; height:22px; border-radius:50%; background:oklch(0.79 0.07 330 / .28); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.07 330);"><span class="mono" style="font:600 10px 'IBM Plex Mono';">H</span></div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b3a89b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- HERO feed clock -->
+      <div style="position:relative; width:250px; height:250px; margin-top:10px;">
+        <svg width="250" height="250" viewBox="0 0 250 250" style="transform:rotate(-90deg);">
+          <circle cx="125" cy="125" r="110" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14"/>
+          <circle cx="125" cy="125" r="110" fill="none" stroke="oklch(0.80 0.10 60)" stroke-width="14" stroke-linecap="round" stroke-dasharray="691" stroke-dashoffset="283"/>
+        </svg>
+        <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+          <div style="font:700 12px 'Hanken Grotesk'; color:#9a8f82; letter-spacing:.05em; text-transform:uppercase;">Since last feed</div>
+          <div class="mono" style="font:600 50px 'IBM Plex Mono'; color:#f4efe9; line-height:1.15; margin-top:4px;">1:47</div>
+          <div style="display:flex; align-items:center; gap:6px; margin-top:4px; font:600 12px 'Hanken Grotesk'; color:oklch(0.86 0.085 60);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a5 5 0 0 0-5 5c0 5-2 6-2 6h14s-2-1-2-6a5 5 0 0 0-5-5Z"/><path d="M10.4 20a1.7 1.7 0 0 0 3.2 0"/></svg>
+            reminder in 1:12
+          </div>
+        </div>
+      </div>
+
+      <!-- secondary stats -->
+      <div style="width:100%; display:flex; gap:10px; margin-top:18px;">
+        <div style="flex:1; display:flex; align-items:center; gap:10px; padding:13px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+          <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.82 0.055 140 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.06 140);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg></div>
+          <div><div class="mono" style="font:600 16px 'IBM Plex Mono';">38m</div><div style="font:500 11px 'Hanken Grotesk'; color:#8a8074;">wet</div></div>
+        </div>
+        <div style="flex:1; display:flex; align-items:center; gap:10px; padding:13px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+          <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.79 0.07 330 / .18); display:flex; align-items:center; justify-content:center; color:oklch(0.86 0.07 330);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v5.5L6.7 16.3A2.4 2.4 0 0 0 8.9 19.8h6.2a2.4 2.4 0 0 0 2.2-3.5L13.5 8.5V3"/><path d="M8.6 14h6.8"/></svg></div>
+          <div><div class="mono" style="font:600 16px 'IBM Plex Mono';">2:10</div><div style="font:500 11px 'Hanken Grotesk'; color:#8a8074;">last pump</div></div>
+        </div>
+      </div>
+
+      <!-- daily totals chips -->
+      <div style="width:100%; display:flex; gap:8px; margin-top:10px; font:500 12px 'Hanken Grotesk'; color:#b3a89b;">
+        <div style="flex:1; text-align:center; padding:9px; border-radius:12px; background:rgba(255,255,255,.04);"><span class="mono" style="font-weight:600; color:#f4efe9;">7</span> feeds</div>
+        <div style="flex:1; text-align:center; padding:9px; border-radius:12px; background:rgba(255,255,255,.04);"><span class="mono" style="font-weight:600; color:#f4efe9;">9</span> diapers</div>
+        <div style="flex:1; text-align:center; padding:9px; border-radius:12px; background:rgba(255,255,255,.04);"><span class="mono" style="font-weight:600; color:#f4efe9;">240</span> ml</div>
+      </div>
+    </div>
+
+    <!-- action dock (glass) -->
+    <div style="position:absolute; bottom:96px; left:14px; right:14px; display:flex; gap:10px;">
+      <button style="flex:1; border:none; cursor:pointer; border-radius:20px; padding:14px 8px; background:oklch(0.80 0.10 60); color:#26190f; display:flex; flex-direction:column; align-items:center; gap:6px; box-shadow:0 8px 20px oklch(0.80 0.10 60 / .3);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M11 3v2M13 3v2M9.4 8.6a3 3 0 0 1 5.2 0V18a3 3 0 0 1-6 0V9.4c0-.3.1-.5.3-.8Z"/><path d="M9 12h6"/></svg>
+        <span style="font:700 13px 'Hanken Grotesk';">Feed</span>
+      </button>
+      <button style="flex:1; border:none; cursor:pointer; border-radius:20px; padding:14px 8px; background:oklch(0.82 0.07 140); color:#1b2517; display:flex; flex-direction:column; align-items:center; gap:6px; box-shadow:0 8px 20px oklch(0.82 0.07 140 / .26);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg>
+        <span style="font:700 13px 'Hanken Grotesk';">Diaper</span>
+      </button>
+      <button style="flex:1; border:none; cursor:pointer; border-radius:20px; padding:14px 8px; background:oklch(0.79 0.09 330); color:#241525; display:flex; flex-direction:column; align-items:center; gap:6px; box-shadow:0 8px 20px oklch(0.79 0.09 330 / .26);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v5.5L6.7 16.3A2.4 2.4 0 0 0 8.9 19.8h6.2a2.4 2.4 0 0 0 2.2-3.5L13.5 8.5V3"/><path d="M8.6 14h6.8"/></svg>
+        <span style="font:700 13px 'Hanken Grotesk';">Pump</span>
+      </button>
+    </div>
+
+    <div style="position:absolute; bottom:22px; left:14px; right:14px; height:60px; border-radius:28px; background:rgba(30,24,18,.55); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border:1px solid rgba(255,255,255,.10); box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 12px 30px rgba(0,0,0,.45); display:flex; align-items:center; justify-content:space-around; padding:0 6px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.86 0.085 60)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8a8074" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8a8074" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M5 16l4-5 3 3 5-7"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8a8074" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.3a3.1 3.1 0 0 1 0 5.8"/><path d="M17 14.6a5.5 5.5 0 0 1 3.4 4.4"/></svg>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 10 · NURSING TIMER (interaction variation) ============================ -->
+<div style="position:absolute; left:1026px; top:1140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">10 &middot; Nursing timer <span style="font-weight:500; color:#8a8074;">&mdash; tap-a-side, ready to start</span></div>
+  <div data-screen-label="Nursing alt" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:#0e0b09; box-shadow:0 30px 70px rgba(0,0,0,.32); color:#f4efe9;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between; opacity:.5;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono';">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#f4efe9;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <div style="position:absolute; left:0; right:0; bottom:0; top:88px; background:#1d1713; border-radius:30px 30px 0 0; border-top:1px solid rgba(255,255,255,.10); box-shadow:0 -22px 55px rgba(0,0,0,.55); display:flex; flex-direction:column;">
+      <div style="width:38px; height:5px; border-radius:3px; background:rgba(255,255,255,.18); margin:10px auto 0;"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 22px 6px;">
+        <span style="font:600 15px 'Hanken Grotesk'; color:#b3a89b;">Cancel</span>
+        <span style="font:800 18px 'Hanken Grotesk';">Nursing</span>
+        <span style="width:48px;"></span>
+      </div>
+
+      <!-- total + live wall clock -->
+      <div style="text-align:center; padding:14px 0 4px;">
+        <div style="font:700 12px 'Hanken Grotesk'; color:#9a8f82; letter-spacing:.05em; text-transform:uppercase;">Session total</div>
+        <div class="mono" style="font:600 44px 'IBM Plex Mono'; color:#f4efe9; line-height:1.2;">00:00</div>
+        <div style="margin-top:10px;">
+          <div style="display:inline-flex; align-items:center; gap:9px; padding:7px 14px; border-radius:15px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);">
+            <span style="font:700 10px 'Hanken Grotesk'; color:#8a8074; letter-spacing:.06em; text-transform:uppercase;">Clock</span>
+            <span class="mono" style="font:600 16px 'IBM Plex Mono'; color:#e6dccf;">{{ wallClock }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- suggestion -->
+      <div style="margin:6px 22px 0; display:flex; align-items:center; gap:9px; padding:11px 14px; border-radius:14px; background:oklch(0.80 0.085 60 / .12); border:1px solid oklch(0.80 0.085 60 / .26);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(0.86 0.085 60)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3"/><circle cx="12" cy="12" r="3.5"/></svg>
+        <span style="font:600 13px 'Hanken Grotesk'; color:#f4efe9;">Start on the <b>left</b> &middot; last session ended on the right</span>
+      </div>
+
+      <!-- two big side targets -->
+      <div style="flex:1; display:flex; gap:14px; padding:18px 22px 0;">
+        <button style="flex:1; border:none; cursor:pointer; border-radius:24px; background:oklch(0.80 0.085 60 / .16); border:1.5px solid oklch(0.80 0.085 60 / .45); box-shadow:0 0 0 4px oklch(0.80 0.085 60 / .10); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; color:#f4efe9;">
+          <div style="width:60px; height:60px; border-radius:50%; background:oklch(0.80 0.10 60); color:#26190f; display:flex; align-items:center; justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div style="text-align:center;"><div style="font:800 19px 'Hanken Grotesk';">Left</div><div class="mono" style="font:600 22px 'IBM Plex Mono'; color:#b3a89b; margin-top:4px;">00:00</div></div>
+          <div style="font:700 10px 'Hanken Grotesk'; color:oklch(0.88 0.085 60); letter-spacing:.05em; text-transform:uppercase;">Suggested</div>
+        </button>
+        <button style="flex:1; border:none; cursor:pointer; border-radius:24px; background:rgba(255,255,255,.05); border:1.5px solid rgba(255,255,255,.10); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; color:#d8cec2;">
+          <div style="width:60px; height:60px; border-radius:50%; background:rgba(255,255,255,.08); color:#f4efe9; display:flex; align-items:center; justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div style="text-align:center;"><div style="font:800 19px 'Hanken Grotesk';">Right</div><div class="mono" style="font:600 22px 'IBM Plex Mono'; color:#8a8074; margin-top:4px;">00:00</div></div>
+          <div style="font:700 10px 'Hanken Grotesk'; color:#7d7368; letter-spacing:.05em; text-transform:uppercase;">Tap to start</div>
+        </button>
+      </div>
+
+      <div style="text-align:center; padding:14px 22px 6px; font:500 12px 'Hanken Grotesk'; color:#8a8074;">Tap a side to begin. Haptic confirms start and stop, so you can keep your eyes on the baby.</div>
+
+      <div style="padding:6px 22px 30px;">
+        <button style="width:100%; border:1px solid rgba(255,255,255,.10); cursor:pointer; height:52px; border-radius:18px; background:rgba(255,255,255,.04); color:#9a8f82; font:700 15px 'Hanken Grotesk';">Save when finished</button>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(244,239,233,.32);"></div>
+  </div>
+</div>
+
+<!-- ============================ FRAME 09 · DASHBOARD LIGHT (style variation) ============================ -->
+<div style="position:absolute; left:553px; top:1140px; width:393px;">
+  <div data-drags-parent="1" style="font:700 13px 'Hanken Grotesk'; color:#39322a; margin-bottom:12px; letter-spacing:.02em;">09 &middot; Dashboard <span style="font-weight:500; color:#8a8074;">&mdash; style variation: warm light mode</span></div>
+  <div data-screen-label="Dashboard light" style="width:393px; height:852px; border-radius:48px; overflow:hidden; position:relative; background:radial-gradient(125% 80% at 50% -8%, #fbf7f1 0%, #f1ece3 56%, #ebe4d9 100%); box-shadow:0 30px 70px rgba(40,30,20,.16); color:#2c251d;">
+
+    <div style="height:54px; padding:0 30px 6px; display:flex; align-items:flex-end; justify-content:space-between;">
+      <span class="mono" style="font:600 15px 'IBM Plex Mono'; color:#2c251d;">9:41</span>
+      <div style="display:flex; gap:7px; align-items:center; color:#2c251d;">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2C5.5 2 2.8 3.2 1 5l1.4 1.5C3.9 5 6.1 4 8.5 4s4.6 1 6.1 2.5L16 5C14.2 3.2 11.5 2 8.5 2z" opacity=".85"/><path d="M8.5 6.6c-1.6 0-3 .6-4 1.6L8.5 12l4-3.8c-1-1-2.4-1.6-4-1.6z"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/><rect x="23.6" y="4.6" width="1.8" height="4" rx="1" fill="currentColor" opacity=".5"/></svg>
+      </div>
+    </div>
+
+    <div style="padding:6px 20px 110px; display:flex; flex-direction:column; gap:14px;">
+
+      <!-- header -->
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:46px; height:46px; border-radius:50%; background:oklch(0.80 0.085 60 / .22); border:1px solid oklch(0.62 0.10 60 / .35); display:flex; align-items:center; justify-content:center; color:oklch(0.52 0.11 60);"><span class="mono" style="font:600 18px 'IBM Plex Mono';">J</span></div>
+          <div>
+            <div style="font:800 26px 'Hanken Grotesk'; letter-spacing:-.02em; line-height:1;">Juniper</div>
+            <div style="font:500 13.5px 'Hanken Grotesk'; color:#7a7064; margin-top:3px;">9 days old</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; padding:7px 10px 7px 8px; border-radius:20px; background:rgba(255,255,255,.7); border:1px solid rgba(40,30,20,.08); box-shadow:0 1px 2px rgba(40,30,20,.05);">
+          <div style="width:24px; height:24px; border-radius:50%; background:oklch(0.79 0.07 330 / .25); display:flex; align-items:center; justify-content:center; color:oklch(0.50 0.11 330);"><span class="mono" style="font:600 11px 'IBM Plex Mono';">H</span></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9c9286" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- reminder -->
+      <div style="border-radius:24px; padding:16px 18px; background:oklch(0.80 0.085 60 / .16); border:1px solid oklch(0.72 0.09 60 / .30); box-shadow:0 1px 2px rgba(40,30,20,.04);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.65); display:flex; align-items:center; justify-content:center; color:oklch(0.55 0.11 60);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a5 5 0 0 0-5 5c0 5-2 6-2 6h14s-2-1-2-6a5 5 0 0 0-5-5Z"/><path d="M10.4 20a1.7 1.7 0 0 0 3.2 0"/></svg>
+            </div>
+            <div>
+              <div style="font:600 13.5px 'Hanken Grotesk'; color:#2c251d;">Next feed reminder</div>
+              <div style="font:500 12px 'Hanken Grotesk'; color:#7a7064; margin-top:1px;">Arms again at 2:55 PM</div>
+            </div>
+          </div>
+          <div class="mono" style="font:600 24px 'IBM Plex Mono'; color:oklch(0.48 0.12 60);">1:12:46</div>
+        </div>
+        <div style="margin-top:13px; height:6px; border-radius:4px; background:rgba(40,30,20,.10); overflow:hidden;">
+          <div style="width:62%; height:100%; border-radius:4px; background:oklch(0.70 0.12 60);"></div>
+        </div>
+      </div>
+
+      <!-- recent -->
+      <div>
+        <div style="font:700 12px 'Hanken Grotesk'; color:#9c9286; letter-spacing:.06em; text-transform:uppercase; margin:2px 2px 9px;">Recent</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px;">
+          <div style="border-radius:20px; padding:13px 11px; background:rgba(255,255,255,.72); border:1px solid rgba(40,30,20,.06); box-shadow:0 1px 2px rgba(40,30,20,.04);">
+            <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.80 0.085 60 / .20); display:flex; align-items:center; justify-content:center; color:oklch(0.55 0.11 60); margin-bottom:9px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M11 3v2M13 3v2M9.4 8.6a3 3 0 0 1 5.2 0V18a3 3 0 0 1-6 0V9.4c0-.3.1-.5.3-.8Z"/><path d="M9 12h6"/></svg></div>
+            <div style="font:600 11px 'Hanken Grotesk'; color:#7a7064;">Last feed</div>
+            <div class="mono" style="font:600 17px 'IBM Plex Mono'; color:#2c251d; margin-top:3px;">1h 47m</div>
+            <div style="font:500 11px 'Hanken Grotesk'; color:#9c9286; margin-top:4px;">90 ml &middot; formula</div>
+          </div>
+          <div style="border-radius:20px; padding:13px 11px; background:rgba(255,255,255,.72); border:1px solid rgba(40,30,20,.06); box-shadow:0 1px 2px rgba(40,30,20,.04);">
+            <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.82 0.055 140 / .22); display:flex; align-items:center; justify-content:center; color:oklch(0.48 0.08 140); margin-bottom:9px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg></div>
+            <div style="font:600 11px 'Hanken Grotesk'; color:#7a7064;">Last change</div>
+            <div class="mono" style="font:600 17px 'IBM Plex Mono'; color:#2c251d; margin-top:3px;">38m</div>
+            <div style="font:500 11px 'Hanken Grotesk'; color:#9c9286; margin-top:4px;">wet</div>
+          </div>
+          <div style="border-radius:20px; padding:13px 11px; background:rgba(255,255,255,.72); border:1px solid rgba(40,30,20,.06); box-shadow:0 1px 2px rgba(40,30,20,.04);">
+            <div style="width:30px; height:30px; border-radius:9px; background:oklch(0.79 0.07 330 / .20); display:flex; align-items:center; justify-content:center; color:oklch(0.52 0.11 330); margin-bottom:9px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v5.5L6.7 16.3A2.4 2.4 0 0 0 8.9 19.8h6.2a2.4 2.4 0 0 0 2.2-3.5L13.5 8.5V3"/><path d="M8.6 14h6.8"/></svg></div>
+            <div style="font:600 11px 'Hanken Grotesk'; color:#7a7064;">Last pump</div>
+            <div class="mono" style="font:600 17px 'IBM Plex Mono'; color:#2c251d; margin-top:3px;">2h 10m</div>
+            <div style="font:500 11px 'Hanken Grotesk'; color:#9c9286; margin-top:4px;">120 ml</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- totals -->
+      <div style="border-radius:22px; padding:15px 6px; background:rgba(255,255,255,.72); border:1px solid rgba(40,30,20,.06); box-shadow:0 1px 2px rgba(40,30,20,.04); display:flex; align-items:center;">
+        <div style="flex:1; text-align:center;"><div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#2c251d;">7</div><div style="font:600 11px 'Hanken Grotesk'; color:#9c9286; margin-top:2px;">feeds</div></div>
+        <div style="width:1px; height:30px; background:rgba(40,30,20,.10);"></div>
+        <div style="flex:1; text-align:center;"><div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#2c251d;">6</div><div style="font:600 11px 'Hanken Grotesk'; color:#9c9286; margin-top:2px;">wet</div></div>
+        <div style="width:1px; height:30px; background:rgba(40,30,20,.10);"></div>
+        <div style="flex:1; text-align:center;"><div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#2c251d;">3</div><div style="font:600 11px 'Hanken Grotesk'; color:#9c9286; margin-top:2px;">dirty</div></div>
+        <div style="width:1px; height:30px; background:rgba(40,30,20,.10);"></div>
+        <div style="flex:1; text-align:center;"><div class="mono" style="font:600 21px 'IBM Plex Mono'; color:#2c251d;">240</div><div style="font:600 11px 'Hanken Grotesk'; color:#9c9286; margin-top:2px;">ml pumped</div></div>
+      </div>
+
+      <!-- quick log -->
+      <div>
+        <div style="font:700 12px 'Hanken Grotesk'; color:#9c9286; letter-spacing:.06em; text-transform:uppercase; margin:4px 2px 9px;">Log</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+          <button style="border:none; cursor:pointer; border-radius:20px; padding:16px 8px 13px; background:oklch(0.78 0.11 60); color:#33210f; display:flex; flex-direction:column; align-items:center; gap:8px; box-shadow:0 6px 16px oklch(0.78 0.11 60 / .35);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M11 3v2M13 3v2M9.4 8.6a3 3 0 0 1 5.2 0V18a3 3 0 0 1-6 0V9.4c0-.3.1-.5.3-.8Z"/><path d="M9 12h6"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Feed</span>
+          </button>
+          <button style="border:none; cursor:pointer; border-radius:20px; padding:16px 8px 13px; background:oklch(0.78 0.09 140); color:#1d2c16; display:flex; flex-direction:column; align-items:center; gap:8px; box-shadow:0 6px 16px oklch(0.78 0.09 140 / .32);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 1 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Diaper</span>
+          </button>
+          <button style="border:none; cursor:pointer; border-radius:20px; padding:16px 8px 13px; background:oklch(0.76 0.11 330); color:#2e1730; display:flex; flex-direction:column; align-items:center; gap:8px; box-shadow:0 6px 16px oklch(0.76 0.11 330 / .32);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v5.5L6.7 16.3A2.4 2.4 0 0 0 8.9 19.8h6.2a2.4 2.4 0 0 0 2.2-3.5L13.5 8.5V3"/><path d="M8.6 14h6.8"/></svg>
+            <span style="font:700 14px 'Hanken Grotesk';">Pump</span>
+          </button>
+        </div>
+        <button style="margin-top:10px; width:100%; border:1px solid rgba(40,30,20,.08); cursor:pointer; border-radius:16px; padding:13px 16px; background:rgba(255,255,255,.6); color:#574e44; display:flex; align-items:center; justify-content:space-between;">
+          <span style="display:flex; align-items:center; gap:10px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="oklch(0.58 0.10 90)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M5 16l4-5 3 3 5-7"/></svg><span style="font:600 14px 'Hanken Grotesk';">Weight &amp; growth</span></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c9286" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:22px; left:14px; right:14px; height:64px; border-radius:30px; background:rgba(255,255,255,.6); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border:1px solid rgba(255,255,255,.8); box-shadow:0 12px 30px rgba(40,30,20,.14); display:flex; align-items:center; justify-content:space-around; padding:0 6px;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:oklch(0.52 0.11 60);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>
+        <span style="font:700 10px 'Hanken Grotesk';">Home</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#9c9286;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Timeline</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#9c9286;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M5 16l4-5 3 3 5-7"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Growth</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px; color:#9c9286;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.3a3.1 3.1 0 0 1 0 5.8"/><path d="M17 14.6a5.5 5.5 0 0 1 3.4 4.4"/></svg>
+        <span style="font:600 10px 'Hanken Grotesk';">Family</span>
+      </div>
+    </div>
+
+    <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px; border-radius:3px; background:rgba(40,30,20,.22);"></div>
+  </div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this._tick = setInterval(() => this.forceUpdate(), 1000);
+  }
+  componentWillUnmount() {
+    if (this._tick) clearInterval(this._tick);
+  }
+  renderVals() {
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    let h = d.getHours();
+    const ap = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return { wallClock: h + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + ' ' + ap };
+  }
+}
+</script>
+</body>
+</html>

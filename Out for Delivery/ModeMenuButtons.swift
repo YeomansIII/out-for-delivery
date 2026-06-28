@@ -7,11 +7,11 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct ModeMenuButtons: View {
     @State private var appState = AppState.shared
-    @Query private var allBabies: [Baby]
+    @FetchRequest(sortDescriptors: []) private var allBabies: FetchedResults<Baby>
 
     private var babies: [Baby] { allBabies.filter { !$0.isArchived } }
     private var hasBabies: Bool { !babies.isEmpty }
@@ -37,6 +37,11 @@ struct ModeMenuButtons: View {
             appState.sheet = .addBaby
         } label: {
             Label("Add Baby", systemImage: "plus")
+        }
+        Button {
+            appState.sheet = .family
+        } label: {
+            Label("Family & Caregivers", systemImage: "person.2.badge.gearshape")
         }
     }
 }

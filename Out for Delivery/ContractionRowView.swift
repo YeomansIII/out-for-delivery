@@ -29,6 +29,7 @@ struct ContractionRowView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
+                LoggedByLabel(name: contraction.loggedByName)
             }
 
             Spacer(minLength: 0)
@@ -93,6 +94,9 @@ struct ContractionRowView: View {
         }
         if let i = interval {
             parts.append("\(TimeFormatting.mmss(i)) since the previous one")
+        }
+        if let loggedBy = contraction.loggedByName, !loggedBy.isEmpty {
+            parts.append("logged by \(loggedBy)")
         }
         return parts.joined(separator: ", ")
     }

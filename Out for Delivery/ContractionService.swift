@@ -3,11 +3,11 @@
 //  Out for Delivery
 //
 //  Single source of truth for Start / Stop / Cancel / Delete.
-//  Routes mutations through one `ModelContext` and refreshes the Live Activity.
+//  Routes mutations through one `NSManagedObjectContext` and refreshes the Live Activity.
 //
 
 import Foundation
-import SwiftData
+import CoreData
 import Observation
 
 @MainActor
@@ -15,8 +15,7 @@ import Observation
 final class ContractionService {
     static let shared = ContractionService()
 
-    private let container: ModelContainer
-    private let context: ModelContext
+    private let context: NSManagedObjectContext
 
     enum Phase: Equatable {
         case resting
@@ -55,12 +54,11 @@ final class ContractionService {
     }
 
     private init() {
-        self.container = AppData.shared.container
-        // Share the container's main context — the same one SwiftUI injects into the
-        // environment for `@Query`. Using a separate context here would split the object
-        // graph: edits/deletes made on one context wouldn't be seen by the views observing
-        // the other, and a later save could resurrect "deleted" rows from the store.
-        self.context = container.mainContext
+        // Share the container's view context — the same one SwiftUI injects into the
+        // environment for `@FetchRequest`. Using a separate context here would split the
+        // object graph: edits/deletes made on one context wouldn't be seen by the views
+        // observing the other, and a later save could resurrect "deleted" rows.
+        self.context = PersistenceController.shared.viewContext
         recompute()
     }
 
@@ -69,8 +67,11 @@ final class ContractionService {
     func start() {
         guard openContraction() == nil else { return }
         let now = Date()
-        let new = Contraction(startDate: now)
-        context.insert(new)
+        let new = Contraction(context: context)
+        new.id = UUID()
+        new.startDate = now
+        new.laborLog = PersistenceController.shared.laborLog
+        CurrentUserIdentity.shared.stamp(new)
         try? context.save()
         phase = .contracting(start: now)
         recompute()
@@ -154,13 +155,52 @@ final class ContractionService {
         recompute()
     }
 
+    // MARK: - Import
+
+    /// Bulk-imports contractions (CSV import). Entries whose start time already
+    /// exists (to the second) are skipped, so re-importing the same file is
+    /// idempotent. Saves once, recomputes, and refreshes the Live Activity.
+    @discardableResult
+    func importContractions(_ entries: [ContractionImport]) -> (imported: Int, duplicates: Int) {
+        var existing = Set(allContractions().map { Self.startKey($0.startDate) })
+        let laborLog = PersistenceController.shared.laborLog
+        var imported = 0
+        var duplicates = 0
+        for entry in entries {
+            let key = Self.startKey(entry.start)
+            if existing.contains(key) {
+                duplicates += 1
+                continue
+            }
+            existing.insert(key)
+            let c = Contraction(context: context)
+            c.id = UUID()
+            c.startDate = entry.start
+            c.endDate = entry.end
+            c.laborLog = laborLog
+            CurrentUserIdentity.shared.stamp(c)
+            imported += 1
+        }
+        if imported > 0 {
+            try? context.save()
+            recompute()
+            Task { await LiveActivityManager.shared.update(with: snapshot) }
+        }
+        return (imported, duplicates)
+    }
+
+    /// De-dup key for a start time, rounded to the whole second to absorb any
+    /// sub-second float drift across an export/import round trip.
+    private static func startKey(_ date: Date) -> Int {
+        Int(date.timeIntervalSinceReferenceDate.rounded())
+    }
+
     // MARK: - Fetch helpers
 
     func allContractions() -> [Contraction] {
-        let descriptor = FetchDescriptor<Contraction>(
-            sortBy: [SortDescriptor(\.startDate, order: .forward)]
-        )
-        return (try? context.fetch(descriptor)) ?? []
+        let request = Contraction.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "startDate", ascending: true)]
+        return (try? context.fetch(request)) ?? []
     }
 
     private func openContraction() -> Contraction? {

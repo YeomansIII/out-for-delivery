@@ -7,13 +7,13 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct BabyFormView: View {
     /// `nil` → creating a new baby; non-nil → editing an existing one.
     let baby: Baby?
 
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.managedObjectContext) private var moc
     @Environment(\.dismiss) private var dismiss
     private let appState = AppState.shared
 
@@ -72,9 +72,15 @@ struct BabyFormView: View {
         if let baby {
             baby.name = trimmed
             baby.birthDate = birthDate
+            try? moc.save()
         } else {
-            let newBaby = Baby(name: trimmed, birthDate: birthDate)
-            modelContext.insert(newBaby)
+            let newBaby = Baby(context: moc)
+            newBaby.id = UUID()
+            newBaby.name = trimmed
+            newBaby.birthDate = birthDate
+            newBaby.createdAt = Date()
+            // Baby is its own CKShare root now — no parent anchor to assign.
+            try? moc.save()
             appState.onBabyCreated(newBaby)
         }
         dismiss()

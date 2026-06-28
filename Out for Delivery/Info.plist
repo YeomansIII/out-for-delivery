@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDisplayName</key>
+	<string>Poops, Pumps, Feeds</string>
+	<key>CKSharingSupported</key>
+	<true/>
 	<key>NSAlarmKitUsageDescription</key>
 	<string>Feed reminders alert you when a feed is due, even when your device is silent or in a Focus, so you don't miss a feeding.</string>
 	<key>NSSupportsLiveActivities</key>

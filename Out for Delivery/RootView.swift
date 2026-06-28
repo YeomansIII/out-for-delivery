@@ -7,10 +7,12 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct RootView: View {
-    @Query(sort: \Baby.createdAt, order: .forward) private var allBabies: [Baby]
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: true)]
+    ) private var allBabies: FetchedResults<Baby>
 
     @State private var appState = AppState.shared
 
@@ -32,23 +34,39 @@ struct RootView: View {
             }
         }
         .sheet(item: $appState.sheet) { which in
-            switch which {
-            case .addBaby: BabyFormView(baby: nil)
-            case .manageBabies: BabyManagerView()
+            Group {
+                switch which {
+                case .addBaby: BabyFormView(baby: nil)
+                case .manageBabies: BabyManagerView()
+                case .family: FamilyView()
+                }
             }
+            .environment(\.managedObjectContext, PersistenceController.shared.viewContext)
         }
         .task(id: babies.map(\.id)) {
             reconcileActiveBaby()
         }
     }
 
-    /// Keep `activeBabyID` pointing at a real, non-archived baby and drop to labor
-    /// mode if every baby has been archived/removed.
+    /// Keep `activeBabyID` pointing at a real, non-archived baby and keep the mode in
+    /// sync with whether any babies exist.
     private func reconcileActiveBaby() {
         if let id = appState.activeBabyID, babies.contains(where: { $0.id == id }) {
             return
         }
-        appState.activeBabyID = babies.first?.id
-        if !hasBabies { appState.mode = .labor }
+        // We aren't pointing at a valid baby. If babies exist (created here, or
+        // arrived from a caregiver's shared baby), adopt the first one. When we
+        // had none active before, land on the baby dashboard the same way creating a
+        // baby does, so a caregiver who accepts a share sees the nursery, not the
+        // contraction timer. A user who later switches back to labor keeps their
+        // choice (this only runs when the active baby is missing).
+        if let first = babies.first {
+            let hadNoActiveBaby = appState.activeBabyID == nil
+            appState.activeBabyID = first.id
+            if hadNoActiveBaby { appState.mode = .newborn }
+        } else {
+            appState.activeBabyID = nil
+            appState.mode = .labor
+        }
     }
 }

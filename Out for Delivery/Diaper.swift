@@ -64,6 +64,15 @@ final class Diaper: NSManagedObject, Identifiable {
     var isDirty: Bool { diaperKind == .dirty || diaperKind == .both }
     /// Whether this change includes urine.
     var isWet: Bool { diaperKind == .wet || diaperKind == .both }
+
+    /// One-line summary for the unified timeline (e.g. "Wet", "Dirty · yellow, seedy",
+    /// "Both · green"). Mirrors DiaperRowView's detail string.
+    var timelineSummary: String {
+        var parts: [String] = []
+        if let color = diaperColor { parts.append(color.label.lowercased()) }
+        if let consistency = diaperConsistency { parts.append(consistency.label.lowercased()) }
+        return parts.isEmpty ? diaperKind.label : "\(diaperKind.label) · \(parts.joined(separator: ", "))"
+    }
 }
 
 /// What a diaper change contained. Stored as the raw string in `Diaper.kind` for

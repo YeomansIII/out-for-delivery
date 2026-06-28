@@ -24,6 +24,8 @@ CloudKit note: before any TestFlight/release build, promote the CloudKit schema 
 ### Two modes, one router
 `RootView` is the top-level router. It switches between `ContentView` (labor / contraction timer) and `NewbornModeView` (baby tracking) based on `AppState.mode`. **With zero non-archived babies the app always forces labor mode**, regardless of the stored preference (`RootView.effectiveMode`). Creating the first baby flips to newborn mode (`AppState.onBabyCreated`). `RootView` also owns the baby sheets and keeps `activeBabyID` pointed at a real baby via `reconcileActiveBaby()`.
 
+Newborn mode (`NewbornModeView`) is a native Liquid Glass `TabView` bottom nav: **Home** (`BabyDashboardView`), **Timeline** (`BabyTimelineView` in `TimelineView.swift` — the unified cross-type log of feeds/diapers/pumps), and **Growth** (a stub until Epic 12). Each tab has its own `NavigationStack` and shares the top toolbar (baby picker + "More" menu with mode switch / Family / manage babies). Family is still a sheet from that menu, not yet a tab. (The view type is `BabyTimelineView`, not `TimelineView`, to avoid shadowing SwiftUI's `TimelineView`.)
+
 ### State singletons (not environment-injected)
 Three `@MainActor` singletons are referenced directly as `.shared` rather than injected through the SwiftUI environment — this is deliberate, because sheets do not reliably inherit a custom `@Observable` from the environment:
 - **`AppData.shared`** — owns the one CloudKit-backed `ModelContainer` (`Schema([Contraction, Baby])`, `cloudKitDatabase: .automatic`). Falls back to a local-only store if CloudKit discovery fails, so the app always works offline.
@@ -50,4 +52,4 @@ Three `@MainActor` singletons are referenced directly as `.shared` rather than i
 
 ## Docs
 
-`docs/` holds the design specs and the numbered user-story feature plan. `docs/Feature-Plan.md` (Epics 1–6, labor) and `docs/Newborn-Care-Features.md` (Epic 7+, newborn) describe *what/why*; `docs/ContractionTracker-Spec.md` is the technical MVP spec. Newborn-care tracking (feeds, diapers, pumping) is largely **not yet built** — `NewbornModeView` is currently a placeholder dashboard.
+`docs/` holds the design specs and the numbered user-story feature plan. `docs/Feature-Plan.md` (Epics 1–6, labor) and `docs/Newborn-Care-Features.md` (Epic 7+, newborn) describe *what/why*; `docs/ContractionTracker-Spec.md` is the technical MVP spec; `docs/Design-Map.md` maps the "Poops Pumps Feeds" design frames to the code. Newborn-care tracking is substantially built: feeds (plus the feed-on-demand reminder), diapers, and pumps each have a model / service / editor / log, surfaced through the newborn dashboard and the unified Timeline. The main unbuilt newborn epics are **Growth** (Epic 12 — the Growth tab is a stub) and **multi-caregiver sharing** (Epic 13).

@@ -34,8 +34,8 @@ stay in solid, legible cards with monospaced digits. See `CLAUDE.md` › Convent
 | 03 | Nursing timer — running | 🚧 | `EditFeedView.swift` (Nursing mode) | Live tap-a-side timer + haptics deferred (stories 8.1/8.4/8.5). Nursing is captured as manual minutes-per-side steppers (story 8.2). |
 | 04 | Log diaper | ✅ | `EditDiaperView.swift` | Wet/Dirty/Both, stool color swatches + consistency (dirty only), time, note. |
 | 05 | Log pump | ✅ | `EditPumpView.swift` | Per-side **or** combined total entry, derived total readout, manual duration (minutes), time, note. The "Time it" live timer is deferred. |
-| 06 | Growth — add measurement | ⛔ | — | Epic 12 (weight/length/head, trend chart). Not built. |
-| 07 | Timeline — unified, with attribution | ⛔ | — | Epic 11.3–11.5. Per-type logs exist (`DiaperListView`/`PumpListView`/`FeedDetailView`); a unified cross-type timeline + filters is not built. |
+| 06 | Growth — add measurement | ⛔ | `NewbornModeView.swift` (`GrowthPlaceholderView`) | Epic 12 (weight/length/head, trend chart). Not built — the Growth tab is a "coming soon" stub for now. |
+| 07 | Timeline — unified, with attribution | ✅ | `TimelineView.swift` (`BabyTimelineView`), `NewbornModeView.swift` (bottom nav) | Cross-type merged list (feeds+diapers+pumps), grouped by day (Today / Yesterday / date), newest first, with per-entry attribution. Filter chips (All / Feeds / Diapers / Pumps) in Liquid Glass; tap a row to edit and swipe to delete via the existing editors/services; an "Add past" + menu logs any type. Reached via the bottom nav (below). |
 | 08 | Dashboard B — feed-clock hero | ⛔ | — | Alternative layout (a large "since last feed" ring). Not adopted; frame 01's layout is the shipped one. |
 | 09 | Dashboard — warm light mode | ✅ (implicitly) | `NewbornModeView.swift` | Not a separate screen — light mode falls out of using system materials + semantic tints instead of hard-coded colors. |
 | 10 | Nursing timer — ready to start | 🚧 | — | Same deferral as frame 03 (live timer + next-side suggestion, story 8.3). |
@@ -57,6 +57,14 @@ add/update/delete. Feeds additionally re-arm the feed-on-demand reminder
 
 **Shared style:** `NewbornStyle.swift` — `NewbornEvent` (feed = orange, diaper = green,
 pump = pink; icon per type) and `DiaperColor.swatch`. Change accent colors/icons here.
+
+**Bottom navigation** (design frames 01/07): newborn mode is a native iOS 26 `TabView`
+(the floating Liquid Glass bar) in `NewbornModeView`, with tabs **Home** (the dashboard),
+**Timeline** (`BabyTimelineView`), and **Growth** (a stub until Epic 12). Each tab has its
+own `NavigationStack`; the baby picker + "More" menu (mode switch, Family, manage babies)
+is the shared top toolbar on every tab. The design's 4th tab, **Family**, is deferred — it
+stays in the More menu (`Sheet.family`) for now, shared with labor mode. Quick-log lives on
+the Home tab, not in the bar (matching the design).
 
 **Specs:** the *what/why* for these screens is `docs/Newborn-Care-Features.md`
 (Epic 8 feeds, 9 pumps, 10 diapers, 11 dashboard/timeline, 12 growth).

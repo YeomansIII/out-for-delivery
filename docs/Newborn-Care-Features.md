@@ -158,14 +158,22 @@ The lowest-friction feature; matters clinically in the newborn weeks for confirm
 
 10.6. As a caregiver, I want to add an optional note to a diaper change, so that I can flag something unusual (e.g. blood, rash).
 
-## Epic 11 — Newborn Dashboard & Timeline — *Dashboard built; timeline planned*
+## Epic 11 — Newborn Dashboard & Timeline — *Implemented (growth tab stubbed)*
 
 > **Implementation note (2026-06-27):** The dashboard (`NewbornModeView` /
 > `BabyDashboardView`) is built per design frame 01 — recent feed/diaper/pump tiles
 > with time-since (11.1), quick-log buttons (11.2), daily totals (11.6), per-event
 > attribution in the logs (11.7), and tap-through to each per-type log for view/edit/
-> delete (11.5, per type). **Not yet built:** the *unified* cross-type timeline and
-> its type filters (11.3, 11.4) — see design frame 07 and `docs/Design-Map.md`.
+> delete (11.5, per type).
+>
+> **Update (2026-06-27):** Newborn mode now uses a native iOS 26 Liquid Glass bottom
+> nav (design frames 01/07): tabs **Home**, **Timeline**, and **Growth** (a stub until
+> Epic 12). The **unified cross-type timeline** is built (`TimelineView.swift` /
+> `BabyTimelineView`, design frame 07): all events merged newest-first and grouped by
+> day (11.3), type-filter chips All/Feeds/Diapers/Pumps (11.4), tap-to-edit and
+> swipe-to-delete via the existing editors/services plus an "Add past" menu for any
+> type (11.5), and per-entry caregiver attribution (11.7). The design's **Family** tab
+> is deferred (stays in the More menu); growth (mentioned in 11.3) lands with Epic 12.
 
 The home screen of newborn mode, tying every feature together.
 
@@ -173,15 +181,15 @@ The home screen of newborn mode, tying every feature together.
 
 11.2. As a caregiver, I want quick-action buttons on the dashboard to start a feed, log a diaper, or log a pump, so that I can record common events without digging through menus.
 
-11.3. As a caregiver, I want a unified chronological timeline of all events (feeds, diapers, pumps, growth) for the active baby, so that I can review the day's history in one place.
+11.3. ✅ As a caregiver, I want a unified chronological timeline of all events (feeds, diapers, pumps, growth) for the active baby, so that I can review the day's history in one place. *(Feeds/diapers/pumps merged, newest-first, grouped by day. Growth events join when Epic 12 lands.)*
 
-11.4. As a caregiver, I want to filter the timeline by event type, so that I can focus on, say, just feeds when reviewing patterns.
+11.4. ✅ As a caregiver, I want to filter the timeline by event type, so that I can focus on, say, just feeds when reviewing patterns.
 
-11.5. As a caregiver, I want to tap any timeline entry to view, edit, or delete it, so that the timeline is also where I correct records.
+11.5. ✅ As a caregiver, I want to tap any timeline entry to view, edit, or delete it, so that the timeline is also where I correct records. *(Tap to edit via the per-type editor; swipe to delete.)*
 
 11.6. As a caregiver, I want at-a-glance daily totals (feeds, diapers, pump volume), so that I have the summary figures pediatricians often ask for.
 
-11.7. As a caregiver, I want each timeline entry to show which caregiver logged it, so that hand-offs between caregivers are clear.
+11.7. ✅ As a caregiver, I want each timeline entry to show which caregiver logged it, so that hand-offs between caregivers are clear. *(Each entry shows the "logged by" attribution via `LoggedByLabel`.)*
 
 ## Epic 12 — Growth Tracking — *Planned*
 

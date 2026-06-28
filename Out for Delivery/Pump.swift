@@ -72,4 +72,23 @@ final class Pump: NSManagedObject, Identifiable {
         let perSide = (leftVolume ?? 0) + (rightVolume ?? 0)
         return perSide > 0 ? perSide : nil
     }
+
+    /// One-line summary for the unified timeline (e.g. "155 ml · L 70 R 85 · 18 min",
+    /// "Pump session"). Mirrors PumpRowView's detail string; reads the app-wide volume
+    /// unit, so it is main-actor isolated.
+    @MainActor var timelineSummary: String {
+        let unit = AppState.shared.volumeUnit
+        var parts: [String] = []
+        if let total = totalVolume {
+            parts.append(unit.formatted(fromMilliliters: total))
+        }
+        if combinedVolume == nil {
+            var sides: [String] = []
+            if let left = leftVolume { sides.append("L \(unit.inputString(fromMilliliters: left))") }
+            if let right = rightVolume { sides.append("R \(unit.inputString(fromMilliliters: right))") }
+            if !sides.isEmpty { parts.append(sides.joined(separator: " ")) }
+        }
+        if let duration { parts.append("\(Int((duration / 60).rounded())) min") }
+        return parts.isEmpty ? "Pump session" : parts.joined(separator: " · ")
+    }
 }

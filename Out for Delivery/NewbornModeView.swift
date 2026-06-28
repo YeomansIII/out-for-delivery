@@ -15,8 +15,15 @@
 import SwiftUI
 import CoreData
 
+/// The newborn-mode tabs surfaced in the Liquid Glass bottom bar (design frames
+/// 01/07). Growth is a stub until Epic 12; Family stays in the More menu for now.
+private enum NewbornTab: Hashable {
+    case home, timeline, growth
+}
+
 struct NewbornModeView: View {
     @State private var appState = AppState.shared
+    @State private var selectedTab: NewbornTab = .home
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: true)]
     ) private var allBabies: FetchedResults<Baby>
@@ -27,24 +34,45 @@ struct NewbornModeView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if let baby = activeBaby {
-                    // Rebuild the dashboard (and its per-baby fetches) when the active
-                    // baby changes, the way FeedSectionView scopes its fetch by id.
-                    BabyDashboardView(baby: baby)
-                        .id(baby.id)
-                } else {
-                    ContentUnavailableView(
-                        "No baby selected",
-                        systemImage: "figure.child",
-                        description: Text("Add a baby to start tracking.")
-                    )
+        if let baby = activeBaby {
+            // Native iOS 26 TabView renders the floating Liquid Glass bottom bar. Each
+            // tab owns its NavigationStack so pushes (recent tiles → per-type logs) keep
+            // independent back stacks. `.id(baby.id)` rebuilds the per-baby fetches when
+            // the active baby changes, the way FeedSectionView scopes its fetch by id.
+            TabView(selection: $selectedTab) {
+                Tab("Home", systemImage: "house", value: NewbornTab.home) {
+                    NavigationStack {
+                        BabyDashboardView(baby: baby)
+                            .navigationTitle(baby.name)
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar { toolbarContent }
+                    }
+                }
+                Tab("Timeline", systemImage: "list.bullet", value: NewbornTab.timeline) {
+                    NavigationStack {
+                        BabyTimelineView(baby: baby)
+                            .toolbar { toolbarContent }
+                    }
+                }
+                Tab("Growth", systemImage: "chart.line.uptrend.xyaxis", value: NewbornTab.growth) {
+                    NavigationStack {
+                        GrowthPlaceholderView()
+                            .toolbar { toolbarContent }
+                    }
                 }
             }
-            .navigationTitle(activeBaby?.name ?? "Baby")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
+            .id(baby.id)
+        } else {
+            NavigationStack {
+                ContentUnavailableView(
+                    "No baby selected",
+                    systemImage: "figure.child",
+                    description: Text("Add a baby to start tracking.")
+                )
+                .navigationTitle("Baby")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { toolbarContent }
+            }
         }
     }
 
@@ -66,6 +94,22 @@ struct NewbornModeView: View {
                 Label("More", systemImage: "ellipsis.circle")
             }
         }
+    }
+}
+
+// MARK: - Growth tab (stub)
+
+/// Placeholder for the Growth tab until Epic 12 (weight / length / head, trend chart)
+/// lands. Keeps the bottom bar matching the design while the feature is built.
+private struct GrowthPlaceholderView: View {
+    var body: some View {
+        ContentUnavailableView {
+            Label("Growth tracking", systemImage: "chart.xyaxis.line")
+        } description: {
+            Text("Weight, length, and head measurements are coming soon.")
+        }
+        .navigationTitle("Growth")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

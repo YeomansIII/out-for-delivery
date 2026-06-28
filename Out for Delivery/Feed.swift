@@ -84,6 +84,30 @@ final class Feed: NSManagedObject, Identifiable {
         let total = (leftMinutes ?? 0) + (rightMinutes ?? 0)
         return total > 0 ? total : nil
     }
+
+    /// One-line summary for the unified timeline (e.g. "Bottle feed · 90 ml formula",
+    /// "Nursing · L 10m R 8m", "Feed"). Mirrors FeedRowView's detail string; reads the
+    /// app-wide volume unit, so it is main-actor isolated.
+    @MainActor var timelineSummary: String {
+        switch feedKind {
+        case .bottle:
+            var parts = ["Bottle feed"]
+            if let ml = volume {
+                parts.append(AppState.shared.volumeUnit.formatted(fromMilliliters: ml))
+            }
+            if let content = bottle {
+                parts.append(content.label.lowercased())
+            }
+            return parts.joined(separator: " · ")
+        case .breast:
+            var sides: [String] = []
+            if let left = leftMinutes, left > 0 { sides.append("L \(left)m") }
+            if let right = rightMinutes, right > 0 { sides.append("R \(right)m") }
+            return sides.isEmpty ? "Nursing" : "Nursing · " + sides.joined(separator: " ")
+        case .unspecified:
+            return "Feed"
+        }
+    }
 }
 
 /// What kind of feed this was. Bottle feeds carry a `volume`; nursing ("breast")

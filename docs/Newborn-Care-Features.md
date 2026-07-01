@@ -42,19 +42,19 @@ The foundation for newborn tracking: a baby profile that anchors all newborn dat
 
 Covers timed nursing and bottle feeds, with "time since last feed" as the headline newborn metric and a resetting **feed-on-demand reminder** as the priority alerting feature.
 
-> **Implementation phasing (2026-06-25):** Building "reminder first." **Phase 1 (in progress)** delivers the minimal feed log needed to drive the reminder — one-tap *Log Feed*, time-since-last, edit/delete (slices of 8.8–8.9) — plus the full feed-on-demand reminder (8.12–8.17) on AlarmKit, with per-baby on/off + interval stored on `Baby`. It also includes a **feed-kind scaffold** (Bottle / Breast / Other on `Feed`), **bottle volume (8.6)** — an optional amount per bottle feed, entered/displayed in an app-wide preferred unit (ml or oz, stored canonically as ml; preference in `AppState`) — and **breast nursing minutes per side (8.2)**, entered manually in the feed editor (left/right minutes on `Feed`). New types: `Feed` model (+ `FeedKind`, `VolumeUnit`), `FeedService`, `FeedReminderManager` (+ shared `FeedReminderMetadata` / `StopFeedReminderIntent`), an AlarmKit countdown widget in the LiveActivity extension, and `FeedSectionView` / `EditFeedView` in the dashboard. **Deferred to a later feed phase:** the *live* nursing timer + start/stop haptics (8.1, 8.4, 8.5), next-side suggestion (8.3), formula vs expressed-breast-milk (8.7), and per-feed notes (8.11). Feeding plan & targets (8.18–8.26) remain deferred as below.
+> **Implementation phasing (2026-06-25):** Building "reminder first." **Phase 1 (in progress)** delivers the minimal feed log needed to drive the reminder — one-tap *Log Feed*, time-since-last, edit/delete (slices of 8.8–8.9) — plus the full feed-on-demand reminder (8.12–8.17) on AlarmKit, with per-baby on/off + interval stored on `Baby`. It also includes a **feed-kind scaffold** (Bottle / Breast / Other on `Feed`), **bottle volume (8.6)** — an optional amount per bottle feed, entered/displayed in an app-wide preferred unit (ml or oz, stored canonically as ml; preference in `AppState`) — and **breast nursing minutes per side (8.2)**, entered manually in the feed editor (left/right minutes on `Feed`). New types: `Feed` model (+ `FeedKind`, `VolumeUnit`), `FeedService`, `FeedReminderManager` (+ shared `FeedReminderMetadata` / `StopFeedReminderIntent`), an AlarmKit countdown widget in the LiveActivity extension, and `FeedSectionView` / `EditFeedView` in the dashboard. **Now built (a later feed phase):** the *live* nursing timer + start/stop haptics (8.1, 8.4, 8.5) and next-side suggestion (8.3) in `NursingTimerView` / `NursingSession`, plus formula vs expressed-breast-milk (8.7) and per-feed notes (8.11). Feeding plan & targets (8.18–8.26) remain deferred as below.
 
 ### Nursing (timed)
 
-8.1. As a caregiver, I want to start and stop a nursing session with a single tap, so that I can time a feed in real time the way the contraction timer works.
+8.1. ✅ As a caregiver, I want to start and stop a nursing session with a single tap, so that I can time a feed in real time the way the contraction timer works. *(`NursingTimerView` / `NursingSession`; tap a side to start, the running side to pause, reached from the dashboard "Nursing" quick action. Stop & save commits one breast feed.)*
 
-8.2. 🚧 *(Phase 1, in progress)* As a caregiver, I want to record which side(s) were used (left, right, or both) for a nursing session, so that I can alternate sides and report this to a lactation consultant or pediatrician. *(Captured as left/right minutes entered manually in the feed editor; sides used are derived from which has time. The live timer in 8.1/8.5 is deferred.)*
+8.2. ✅ As a caregiver, I want to record which side(s) were used (left, right, or both) for a nursing session, so that I can alternate sides and report this to a lactation consultant or pediatrician. *(The live timer records per-side time; the feed editor's manual left/right minute steppers remain for after-the-fact entry.)*
 
-8.3. As a caregiver, I want the app to suggest which side to start on next based on the last session, so that I don't have to remember which side was used last.
+8.3. ✅ As a caregiver, I want the app to suggest which side to start on next based on the last session, so that I don't have to remember which side was used last. *(`NursingSession.suggestedStartSide` highlights the side opposite the heavier one in the last nursing feed.)*
 
-8.4. As a caregiver, I want a haptic confirmation on start/stop of a nursing session, so that I know the tap registered without watching the screen while holding the baby.
+8.4. ✅ As a caregiver, I want a haptic confirmation on start/stop of a nursing session, so that I know the tap registered without watching the screen while holding the baby. *(`.sensoryFeedback(.impact, …)` on every start/switch/pause; `.success` on save.)*
 
-8.5. As a caregiver, I want a live count-up of the current nursing session's duration, so that I can see how long the baby has been feeding.
+8.5. ✅ As a caregiver, I want a live count-up of the current nursing session's duration, so that I can see how long the baby has been feeding. *(Per-side and total `Text(timerInterval:)` count-ups on `NursingTimerView`.)*
 
 ### Bottle
 
@@ -119,14 +119,14 @@ These let a caregiver record what a lactation consultant or pediatrician recomme
 > **Implementation note (2026-06-27):** Built. `Pump` model (left/right/combined ml +
 > duration + note), `PumpService`, `EditPumpView` (per-side or combined entry, manual
 > duration), and `PumpListView` (recent / add-past / edit / delete). Surfaced on the
-> dashboard (last pump + today's expressed total). **Deferred:** the live "Time it"
-> session timer (9.2 still satisfied via manual minutes).
+> dashboard (last pump + today's expressed total). The live "Time it" session timer
+> (9.2) is now built — an inline count-up in `EditPumpView` that fills the minutes field.
 
 Pump sessions only — no milk-inventory/storage tracking in this scope.
 
 9.1. As a caregiver, I want to log a pump session recording the volume expressed per side (left, right, or combined total), so that I can track my pumping output.
 
-9.2. As a caregiver, I want to record the duration of a pump session (timed live or entered manually), so that I have a complete record of the session.
+9.2. ✅ As a caregiver, I want to record the duration of a pump session (timed live or entered manually), so that I have a complete record of the session. *(Inline "Time it" live count-up in `EditPumpView` fills the minutes field on stop; manual entry still available.)*
 
 9.3. As a caregiver, I want to see the time since my last pump session, so that I can keep a consistent pumping schedule.
 

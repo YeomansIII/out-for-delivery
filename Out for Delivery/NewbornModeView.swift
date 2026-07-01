@@ -124,7 +124,7 @@ private struct BabyDashboardView: View {
     @State private var sheet: LogSheet?
 
     private enum LogSheet: Identifiable {
-        case feed, diaper, pump
+        case feed, nursing, diaper, pump
         var id: Self { self }
     }
 
@@ -170,6 +170,8 @@ private struct BabyDashboardView: View {
                         note: draft.note
                     )
                 }
+            case .nursing:
+                NursingTimerView(baby: baby)
             case .diaper:
                 EditDiaperView(creating: .wet) { draft in
                     DiaperService.shared.addDiaper(
@@ -379,11 +381,32 @@ private struct BabyDashboardView: View {
             GlassEffectContainer(spacing: 10) {
                 HStack(spacing: 10) {
                     quickLogButton(.feed) { sheet = .feed }
+                    nursingQuickButton { sheet = .nursing }
                     quickLogButton(.diaper) { sheet = .diaper }
                     quickLogButton(.pump) { sheet = .pump }
                 }
             }
         }
+    }
+
+    /// The live nursing timer entry (story 8.1). Shares the feed tint but carries a
+    /// stopwatch glyph to read as "time it live" rather than "log a bottle".
+    private func nursingQuickButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: "stopwatch.fill")
+                    .font(.title2)
+                Text("Nursing")
+                    .font(.headline)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 14)
+        }
+        .buttonStyle(.glassProminent)
+        .tint(NewbornEvent.feed.tint)
+        .accessibilityHint("Opens the live nursing timer")
     }
 
     private func quickLogButton(_ event: NewbornEvent, action: @escaping () -> Void) -> some View {
@@ -393,6 +416,8 @@ private struct BabyDashboardView: View {
                     .font(.title2)
                 Text(event.title)
                     .font(.headline)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 14)

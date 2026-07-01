@@ -29,16 +29,16 @@ stay in solid, legible cards with monospaced digits. See `CLAUDE.md` › Convent
 
 | # | Frame (design label) | Status | App code | Notes |
 |---|----------------------|--------|----------|-------|
-| 01 | Dashboard — status at a glance | ✅ | `NewbornModeView.swift` (`BabyDashboardView`, `RecentTile`), `NewbornStyle.swift` | Header, feed-reminder countdown card, recent feed/diaper/pump tiles, daily totals, quick-log buttons. The "Weight & growth" row is omitted (growth out of scope). |
+| 01 | Dashboard — status at a glance | ✅ | `NewbornModeView.swift` (`BabyDashboardView`, `RecentTile`), `NewbornStyle.swift` | Header, feed-reminder countdown card, recent feed/diaper/pump tiles, daily totals, quick-log buttons (Feed / Nursing timer / Diaper / Pump). The "Weight & growth" row is omitted (growth out of scope). |
 | 02 | Log feed — bottle | ✅ | `EditFeedView.swift` | Bottle/Nursing segmented, big ± volume stepper with presets + ml/oz toggle, Formula/Breast milk, time, note, Save bar with attribution. |
-| 03 | Nursing timer — running | 🚧 | `EditFeedView.swift` (Nursing mode) | Live tap-a-side timer + haptics deferred (stories 8.1/8.4/8.5). Nursing is captured as manual minutes-per-side steppers (story 8.2). |
+| 03 | Nursing timer — running | ✅ | `NursingTimerView.swift`, `NursingSession.swift` | Live tap-a-side timer (8.1), live per-side count-up (8.5) via `Text(timerInterval:)`, and start/switch/pause haptics (8.4) via `.sensoryFeedback`. Manual minutes-per-side steppers in `EditFeedView` remain the after-the-fact path (8.2). Stop & save commits one breast feed (rounded minutes per side). |
 | 04 | Log diaper | ✅ | `EditDiaperView.swift` | Wet/Dirty/Both, stool color swatches + consistency (dirty only), time, note. |
-| 05 | Log pump | ✅ | `EditPumpView.swift` | Per-side **or** combined total entry, derived total readout, manual duration (minutes), time, note. The "Time it" live timer is deferred. |
+| 05 | Log pump | ✅ | `EditPumpView.swift` | Per-side **or** combined total entry, derived total readout, time, note. Duration is entered manually (minutes) **or** timed live with the inline "Time it" count-up (story 9.2), which fills the minutes field on stop. |
 | 06 | Growth — add measurement | ⛔ | `NewbornModeView.swift` (`GrowthPlaceholderView`) | Epic 12 (weight/length/head, trend chart). Not built — the Growth tab is a "coming soon" stub for now. |
 | 07 | Timeline — unified, with attribution | ✅ | `TimelineView.swift` (`BabyTimelineView`), `NewbornModeView.swift` (bottom nav) | Cross-type merged list (feeds+diapers+pumps), grouped by day (Today / Yesterday / date), newest first, with per-entry attribution. Filter chips (All / Feeds / Diapers / Pumps) in Liquid Glass; tap a row to edit and swipe to delete via the existing editors/services; an "Add past" + menu logs any type. Reached via the bottom nav (below). |
 | 08 | Dashboard B — feed-clock hero | ⛔ | — | Alternative layout (a large "since last feed" ring). Not adopted; frame 01's layout is the shipped one. |
 | 09 | Dashboard — warm light mode | ✅ (implicitly) | `NewbornModeView.swift` | Not a separate screen — light mode falls out of using system materials + semantic tints instead of hard-coded colors. |
-| 10 | Nursing timer — ready to start | 🚧 | — | Same deferral as frame 03 (live timer + next-side suggestion, story 8.3). |
+| 10 | Nursing timer — ready to start | ✅ | `NursingTimerView.swift`, `NursingSession.swift` | The pre-start state of the timer: two side buttons with the next-side suggestion (story 8.3) highlighted, derived from the last nursing feed. Reached from the dashboard "Nursing" quick action. |
 
 ## Cross-cutting structure
 
